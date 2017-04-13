@@ -1,0 +1,14 @@
+<table class="table table-bordered table-striped formLayout m0">
+#set($temp=0)
+#foreach(${field} in ${table.fields})
+#if($temp % 2 == 0)
+	<tr>
+#end	
+		<td>${field.remark}:</td>
+		<td#if($velocityCount == ${table.fields.size()}&&$velocityCount % 2 == 1) colspan="3"#end>${info.cmd}!{${tools.getVarName(${table.name})}.${field.fieldName}}</td>
+#set($temp = $temp + 1)
+#if($temp % 2 == 0 || $velocityCount == ${table.fields.size()})
+	</tr>
+#end
+#end
+</table>

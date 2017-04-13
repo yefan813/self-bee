@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>${constant.getPackageGroupId()}</groupId>
+		<artifactId>${constant.getProjectArtifactId()}</artifactId>
+		<version>${constant.getProjectVersion()}</version>
+	</parent>
+
+	<artifactId>${constant.getProjectArtifactId()}-web</artifactId>
+	<packaging>war</packaging>
+	<name>${constant.getProjectArtifactId()}-web</name>
+
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+            <!-- 部署web应用到Tomcat下的插件,并设置Tomcat启动端口与访问路径 -->
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <port>80</port>
+                    <path>/</path>
+                    <uriEncoding>UTF-8</uriEncoding>
+                    <server>tomcat7</server>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${project.name}</warName>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- dmall -->
+		<dependency>
+		    <groupId>com.dmall</groupId>
+		    <artifactId>erp-auth-service</artifactId>
+		</dependency>
+#foreach($depServer in ${constant.depServers})
+		<dependency>
+			<groupId>$depServer.getGroupId()</groupId>
+			<artifactId>$depServer.getArtifactId()</artifactId>
+		</dependency>
+#end
+		<dependency>
+            <groupId>com.wm</groupId>
+            <artifactId>wm-nb-common</artifactId>
+        </dependency>
+        <dependency>
+            <artifactId>admiral-client</artifactId>
+            <groupId>com.dmall.admiral</groupId>
+        </dependency>
+        <!-- service -->
+        <dependency>
+            <groupId>${constant.getPackageGroupId()}</groupId>
+            <artifactId>${constant.getProjectArtifactId()}-service</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+
+        <!-- spring start -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+
+        <!-- 视图velocity模板 -->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>velocity</groupId>
+            <artifactId>velocity-dep</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>velocity-tools</groupId>
+            <artifactId>velocity-tools</artifactId>
+        </dependency>
+
+        <!-- 工具 -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+        </dependency>
+
+        <!-- 编译时依赖 -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+		</dependency>
+
+		<!-- zookeeper -->
+        <dependency>
+            <groupId>org.apache.kafka</groupId>
+            <artifactId>kafka_2.10</artifactId>
+        </dependency>
+		
+		<!-- 单元测试 -->
+		<dependency>
+			<artifactId>junit</artifactId>
+			<groupId>junit</groupId>
+		</dependency>
+	</dependencies>
+</project>

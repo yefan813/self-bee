@@ -1,0 +1,14 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.service;
+
+import ${constant.getPackageName()}.domain.${table.className};
+import ${constant.getPackageName()}.service.base.BaseService;
+
+/**
+ * ${table.className}Service接口
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public interface ${table.className}Service extends BaseService<${table.className},${table.primaryField.typeName}>{
+	
+}

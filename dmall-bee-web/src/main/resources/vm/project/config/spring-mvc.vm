@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop.xsd"
+	default-autowire="byName">
+
+	<!-- mvc controller -->
+	<context:component-scan base-package="${constant.getPackageName()}.web" />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	<context:annotation-config />
+
+	<bean id="aesKey" class="com.wm.nb.domain.security.AesKey">
+		<property name="key" value="${cookie.aes.key}" />
+	</bean>
+
+	<!-- cookie related -->
+
+	<!-- spring mvc related -->
+
+	<!-- JSR-303 support will be detected on classpath and enabled automatically -->
+	<mvc:annotation-driven />
+
+	<!-- static resources -->
+	<mvc:resources location="/assets/" mapping="/assets/**" cache-period="864000" /><!-- 24 * 3600 * 10 -->
+	<mvc:resources location="/js/" mapping="/js/**" cache-period="864000" /><!-- 24 * 3600 * 10 -->
+	<mvc:resources location="/css/" mapping="/css/**" cache-period="864000" /><!-- 24 * 3600 * 10 -->
+	<mvc:default-servlet-handler />
+	<!-- template view -->
+	<bean id="velocityConfig" class="org.springframework.web.servlet.view.velocity.VelocityConfigurer">
+		<property name="resourceLoaderPath" value="/WEB-INF/vm/" />
+		<property name="velocityProperties">
+			<props>
+				<prop key="input.encoding">UTF-8</prop>
+				<prop key="output.encoding">UTF-8</prop>
+				<prop key="contentType">text/html;charset=UTF-8</prop>
+				<prop key="velocimacro.library">common/macro.vm</prop>
+				<prop key="eventhandler.referenceinsertion.class">com.wm.nb.web.utils.WebEscapeHtmlUtils</prop>
+				<prop key="eventhandler.escape.html.match">/^(?!\$\!?(unesc_|screen_content).*)/</prop>
+			</props>
+		</property>
+	</bean>
+	<bean id="velocityViewResolver" class="com.wm.nb.web.utils.CusVelocityLayoutViewResolver">
+		<property name="layoutUrl" value="layout/default.vm" />
+		<property name="cache" value="false" />
+		<property name="suffix" value=".vm" />
+		<property name="velocityUrl" ref="velocityUrl" />
+		<property name="exposeSpringMacroHelpers" value="true" />
+		<property name="dateToolAttribute" value="dateTool" />
+		<property name="numberToolAttribute" value="numberTool" />
+		<!-- Merge urlBuilderMap to view context for convenience. You can put your tools which must be thread safe. -->
+		<property name="contentType" value="text/html;charset=UTF-8" />
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<property name="defaultContentType" value="text/html" />
+		<!-- not by accept header -->
+		<property name="ignoreAcceptHeader" value="true" />
+		<!-- by extension -->
+		<property name="mediaTypes">
+			<map>
+				<entry key="xml" value="application/xml" />
+				<entry key="json" value="application/json" />
+			</map>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<ref bean="velocityViewResolver" />
+			</list>
+		</property>
+		<property name="defaultViews">
+			<list>
+				<!-- for application/json -->
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+			</list>
+		</property>
+	</bean>
+
+	<!-- locale related -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="_clientlocale" />
+		<property name="defaultLocale" value="zh_CN" />
+		<property name="cookieMaxAge" value="2147483647" />
+	</bean>
+
+	<!-- Access resource bundles with the specified basename -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames" value="/WEB-INF/i18n/content,/WEB-INF/i18n/validation,/WEB-INF/i18n/asset,/WEB-INF/i18n/enum" />
+		<property name="cacheSeconds" value="5" />
+	</bean>
+
+	<!-- exception related -->
+	<!-- all exception handler will be registered by DispatcherServlet default (detectAllHandlerExceptionResolvers=true) <bean 
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver"> <property name="defaultErrorView" value="common/error"/> 
+		<property name="exceptionMappings"> </property> </bean> -->
+	<!--VelocityLayoutViewResolver 页面公共url -->
+	<bean id="velocityUrl" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<!--本系统自己地址 -->
+				<entry key="homeModule">
+					<bean class="com.wm.nb.web.utils.UrlUtil">
+						<property name="url" value="http://${info.cmd}{domain.name}/" />
+						<property name="charsetName" value="UTF-8"></property>
+					</bean>
+				</entry>
+				<entry key="erpModule">
+					<bean class="com.wm.nb.web.utils.UrlUtil">
+						<property name="url" value="http://${info.cmd}{erp.domain.name}/" />
+						<property name="charsetName" value="UTF-8"></property>
+					</bean>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="velocityTools" class="java.util.HashMap">
+		<constructor-arg>
+			<map>
+				<entry key="stringUtils">
+					<bean class="org.apache.commons.lang.StringUtils" />
+				</entry>
+				<entry key="dateUtils">
+					<bean class="com.wm.nb.common.DateUtils"/>
+				</entry>
+			</map>
+		</constructor-arg>
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- one of the properties available; the maximum file size in bytes -->
+		<property name="defaultEncoding" value="utf-8" />
+		<property name="maxUploadSize" value="10485760000" />
+		<property name="maxInMemorySize" value="40960" />
+	</bean>
+
+	<!-- 如需鉴权，将下面的配置打开 -->
+	<!-- <mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/**.html" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<mvc:exclude-mapping path="/soa/**" />
+			<mvc:exclude-mapping path="/error/**" />
+			<bean class="com.dmall.erp.auth.web.interceptor.ErpLoginInterceptor">
+				<property name="erpDomain" value="http://${erp.domain.name}" />
+			</bean>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/**.html" />
+			<mvc:exclude-mapping path="/assets/**" />
+			<mvc:exclude-mapping path="/" />
+			<mvc:exclude-mapping path="/remote/**" />
+			<mvc:exclude-mapping path="/soa/**" />
+			<mvc:exclude-mapping path="/error/**" />
+			<mvc:exclude-mapping path="/favicon.ico" />
+			<bean class="com.dmall.erp.auth.web.interceptor.ErpAuthInterceptor">
+				<property name="erpLoginDubboService" ref="erpLoginDubboService"/>
+				<property name="erpDomain" value="http://${erp.domain.name}" />
+				<property name="devMode" value="${devMode}" />
+			</bean>
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+
+	<bean id="exceptionHandler" class="com.wm.nb.web.handler.ErpExceptionHandler" />
+</beans>

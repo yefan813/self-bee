@@ -1,0 +1,43 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.${constant.entityModule};
+
+#foreach(${type} in ${table.imports})
+import ${type.name};
+#end
+
+/**
+ * ${table.name}:$!{table.remark}
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public class ${table.className} {
+	private static final long serialVersionUID = 1L;
+#foreach(${field} in ${table.fields})
+#if(${field.skip}==false)
+
+	/**
+	 * ${field.name}(${field.remark})
+	 */
+	private ${field.type.simpleName} ${field.fieldName};
+#end
+#end
+
+#foreach(${field} in ${table.fields})
+#if(${field.skip}==false)
+
+	/**
+	 * @return ${field.fieldName}
+	 */
+	public ${field.type.simpleName} ${field.methodPrefix}${field.methodName}(){
+		return ${field.fieldName};
+	}
+
+	/**
+	 * @param ${field.fieldName}
+	 */
+	public void set${field.methodName}(${field.type.simpleName} ${field.fieldName}){
+		this.${field.fieldName} = ${field.fieldName};
+	}
+#end
+#end
+}

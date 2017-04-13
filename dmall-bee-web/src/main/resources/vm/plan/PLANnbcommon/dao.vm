@@ -1,0 +1,14 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.dao;
+
+import ${constant.getPackageName()}.${constant.entityModule}.${table.className};
+import com.wm.nb.dao.base.BaseDao;
+
+/**
+ * ${table.className}Dao
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public interface ${table.className}Dao extends BaseDao<${table.className}, ${table.primaryField.typeName}> {
+
+}

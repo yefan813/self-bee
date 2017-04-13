@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>${constant.getPackageGroupId()}</groupId>
+		<artifactId>${constant.getProjectArtifactId()}</artifactId>
+		<version>${constant.getProjectVersion()}</version>
+	</parent>
+
+	<artifactId>${constant.getProjectArtifactId()}-dao</artifactId>
+	<packaging>jar</packaging>
+	<name>${constant.getProjectArtifactId()}-dao</name>
+
+	<build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <filters>
+            <filter>src/main/resources/env/${info.cmd}{env}.properties</filter>
+        </filters>
+	</build>
+
+	<dependencies>
+#if(${info.dataAccessMode} == 'PLANdatabase')
+		<!-- dmall -->
+		<dependency>
+			<groupId>com.dmall</groupId>
+			<artifactId>dmall-data-base</artifactId>
+		</dependency>
+
+#end
+		<!-- pojo -->
+		<dependency>
+			<groupId>${constant.getPackageGroupId()}</groupId>
+			<artifactId>${constant.getProjectArtifactId()}-${constant.entityModule}</artifactId>
+			<version>${project.parent.version}</version>
+##          <version>${constant.getProjectVersion()}</version>
+		</dependency>
+
+		<!-- 单元测试 -->
+		<dependency>
+			<artifactId>junit</artifactId>
+			<groupId>junit</groupId>
+		</dependency>
+	</dependencies>
+</project>

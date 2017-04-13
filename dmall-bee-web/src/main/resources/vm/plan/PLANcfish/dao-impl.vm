@@ -1,0 +1,23 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.dao$!{packageExt};
+
+$!{importExt}
+import org.springframework.stereotype.Repository;
+import ${constant.getPackageName()}.domain.${table.className};
+import ${constant.getPackageName()}.dao.base.BaseDaoImpl;
+
+/**
+ * ${table.className}Dao 实现类
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+@Repository("${tools.getVarName(${table.name})}Dao")
+public class ${table.className}Dao$!{classNameExt} extends BaseDaoImpl<${table.className},${table.primaryField.typeName}>$!{interExt} {
+	private final static String NAMESPACE = "${constant.getPackageName()}.dao.${table.className}Dao.";
+	
+	//返回本DAO命名空间,并添加statement
+	public String getNameSpace(String statement) {
+		return NAMESPACE + statement;
+	}
+		
+}

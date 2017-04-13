@@ -1,0 +1,66 @@
+<head>
+	<meta charset="utf-8" />
+	<title>${info.cmd2}if(${info.cmd}title)${info.cmd}title - 物美尚佳会员管理系统 ${info.cmd2}else 物美尚佳会员管理系统 ${info.cmd2}end</title>
+	<meta name="description" content="Static & Dynamic Tables" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!-- basic styles -->
+	<link href="${info.cmd}!homeModule.getTarget('/assets/css/bootstrap.min.css')" rel="stylesheet" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/font-awesome.min.css')" />
+	<!--[if IE 7]>
+	  <link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/font-awesome-ie7.min.css')" />
+	<![endif]-->
+	<!-- page specific plugin styles -->
+	
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/chosen.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/datepicker.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/bootstrap-timepicker.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/colorbox.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/daterangepicker.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/ui.jqgrid.css')" />
+	<!-- ace styles -->
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/ace.min.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/ace-rtl.min.css')" />
+	<link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/ace-skins.min.css')" />
+	<!--[if lte IE 8]>
+	  <link rel="stylesheet" href="${info.cmd}!homeModule.getTarget('/assets/css/ace-ie.min.css')" />
+	<![endif]-->
+	<!-- inline styles related to this page -->
+	<!-- ace settings handler -->
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/ace-extra.min.js')"></script>
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/html5shiv.js')"></script>
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/respond.min.js')"></script>
+	<![endif]-->
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/jquery.js')"></script>
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/jquery.form.js')"></script>
+    
+    <!--[if IE]>
+        <script type="text/javascript">
+         window.jQuery || document.write("<script src='/assets/js/jquery-1.10.2.min.js'>"+"<"+"/script>");
+        </script>
+    <![endif]-->
+   
+    <script src="${info.cmd}!homeModule.getTarget('/assets/js/bootstrap.min.js')"></script>
+    <script src="${info.cmd}!homeModule.getTarget('/assets/js/typeahead-bs2.min.js')"></script>
+    <!-- ace scripts -->
+    <script src="${info.cmd}!homeModule.getTarget('/assets/js/ace-elements.min.js')"></script>
+    <script src="${info.cmd}!homeModule.getTarget('/assets/js/ace.min.js')"></script>
+    <!-- page specific plugin scripts -->
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/bootbox.min.js')"></script>
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/bootstrap-tag.min.js')"></script>
+    <script src="${info.cmd}!homeModule.getTarget('/assets/js/common/page.js?v=20141023')"></script>
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/chosen.jquery.min.js')"></script>
+	<script src="${info.cmd}!homeModule.getTarget('/assets/js/load.js')"></script>
+</head>
+<style>
+.td-grey{
+    background-color:#eff3f8;
+    font-weight:bold;
+ }
+ td{
+    text-align: center;
+	vertical-align: middle;
+	valign:middle;
+ }
+</style>	

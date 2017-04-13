@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--样式头文件-->
+${info.cmd2}parse("common/head.vm")
+	<body>
+	     ${info.cmd}screen_content
+	</body>
+</html>

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>${info.cmd2}if(${info.cmd}title)${info.cmd}title - 物美会员管理系统${info.cmd2}else 物美会员管理系统 ${info.cmd2}end</title>
+	</head>
+<body>
+    ${info.cmd}screen_content
+</body>
+</html>

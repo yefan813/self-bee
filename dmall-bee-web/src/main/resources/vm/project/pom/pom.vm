@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>${constant.getPackageGroupId()}</groupId>
+	<artifactId>${constant.getProjectArtifactId()}</artifactId>
+	<version>${constant.getProjectVersion()}</version>
+	<packaging>pom</packaging>
+	<name>${constant.getProjectArtifactId()}</name>
+	<modules>
+#foreach(${tpl} in ${template})
+#if(${tpl}  != "")
+#if(${tpl}  == "domain")
+		<module>${constant.getProjectArtifactId()}-${info.entityModule}</module>
+#else
+		<module>${constant.getProjectArtifactId()}-${tpl}</module>
+#end
+#end
+#end
+	</modules>
+
+	<properties>
+        <jdk.version>1.7</jdk.version>
+        <jdk.source.version>1.6</jdk.source.version>
+        <jdk.target.version>1.6</jdk.target.version>
+        <project.build.sourceEncoding>${constant.getProjectEncoding()}</project.build.sourceEncoding>
+		<spring.version>4.1.4.RELEASE</spring.version>
+		<spring.redis.version>1.0.4.RELEASE</spring.redis.version>
+		<aspectj.version>1.8.4</aspectj.version>
+        <cglib.version>2.2.2</cglib.version>
+		<mybatis.version>3.2.8</mybatis.version>
+		<mybatis.spring.version>1.2.0</mybatis.spring.version>
+        <druid.version>1.0.14</druid.version>
+		<mysql.connector.version>5.1.25</mysql.connector.version>
+		<guava.version>14.0.1</guava.version>
+		<fastjson.version>1.1.31</fastjson.version>
+		<jackson.version>2.2.3</jackson.version>
+		<xstream.version>1.4.4</xstream.version>
+		<commons.lang.version>2.6</commons.lang.version>
+		<commons.compress.version>1.5</commons.compress.version>
+        <commons.fileupload.version>1.2.2</commons.fileupload.version>
+		<yuicompressor.version>2.4.7</yuicompressor.version>
+		<velocity.version>1.7</velocity.version>
+		<velocity.dep.version>1.4</velocity.dep.version>
+		<velocity.tools.version>1.2</velocity.tools.version>
+		<httpclient.version>3.1</httpclient.version>
+		<slf4j.version>1.7.5</slf4j.version>
+		<servlet.api.version>2.5</servlet.api.version>
+		<junit.version>4.8.2</junit.version>
+		<!-- dmall -->
+		<nb.common.version>0.2.7.RELEASE</nb.common.version>
+        <dmc.version>0.0.3-SNAPSHOT</dmc.version>
+		<erp.version>1.0.RELEASE</erp.version>
+		<admiral.version>1.0.3</admiral.version>
+		<database.version>1.3-SNAPSHOT</database.version>
+	</properties>
+
+	<!-- 环境配置 -->
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+                <env>dev</env>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+			</activation>
+			<properties>
+                <env>test</env>
+			</properties>
+		</profile>
+        <profile>
+            <id>qtest</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>qtest</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>gray</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>gray</env>
+            </properties>
+        </profile>
+        <profile>
+            <id>online</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <env>online</env>
+            </properties>
+        </profile>
+	</profiles>
+
+	<!-- 插件管理 -->
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>${info.cmd}{jdk.source.version}</source>
+                    <target>${info.cmd}{jdk.target.version}</target>
+                    <encoding>${constant.getProjectEncoding()}</encoding>
+                </configuration>
+            </plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-war-plugin</artifactId>
+					<version>2.2</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<!-- 依赖管理 -->
+	<dependencyManagement>
+		<dependencies>
+            <!-- dmall -->
+#foreach($depServer in ${constant.depServers})
+			<dependency>
+				<groupId>$depServer.getGroupId()</groupId>
+				<artifactId>$depServer.getArtifactId()</artifactId>
+				<version>$depServer.getVersion()</version>
+			</dependency>
+#end
+			<dependency>
+			    <groupId>com.dmall</groupId>
+			    <artifactId>erp-auth-service</artifactId>
+			    <version>${erp.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>com.dmall</groupId>
+                <artifactId>dmall-data-base</artifactId>
+                <version>${database.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.wm</groupId>
+                <artifactId>wm-nb-common</artifactId>
+                <version>${info.cmd}{nb.common.version}</version>
+            </dependency>
+            <dependency>
+                <artifactId>admiral-client</artifactId>
+                <groupId>com.dmall.admiral</groupId>
+                <version>${info.cmd}{admiral.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.kafka</groupId>
+                <artifactId>kafka_2.10</artifactId>
+                <version>0.8.2.1</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.slf4j</groupId>
+                        <artifactId>slf4j-log4j12</artifactId>
+                    </exclusion>
+                </exclusions>
+            </dependency>
+			<!-- spring -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context-support</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>org.springframework</groupId>
+				<artifactId>spring-jdbc</artifactId>
+				<version>${info.cmd}{spring.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-tx</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-asm</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-redis</artifactId>
+				<version>${spring.redis.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${info.cmd}{spring.version}</version>
+            </dependency>
+
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>cglib</groupId>
+                <artifactId>cglib-nodep</artifactId>
+                <version>${cglib.version}</version>
+            </dependency>
+
+			<!-- MyBatis&JDBC -->
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis</artifactId>
+				<version>${mybatis.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.mybatis</groupId>
+				<artifactId>mybatis-spring</artifactId>
+				<version>${mybatis.spring.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>druid</artifactId>
+                <version>${druid.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.connector.version}</version>
+			</dependency>
+
+			<!-- 工具 -->
+			<dependency>
+				<groupId>com.google.guava</groupId>
+				<artifactId>guava</artifactId>
+				<version>${guava.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>com.thoughtworks.xstream</groupId>
+				<artifactId>xstream</artifactId>
+				<version>${xstream.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>commons-lang</groupId>
+                <artifactId>commons-lang</artifactId>
+                <version>${commons.lang.version}</version>
+            </dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-compress</artifactId>
+				<version>${commons.compress.version}</version>
+			</dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons.fileupload.version}</version>
+            </dependency>
+
+			<!-- JS、CSS压缩 -->
+			<dependency>
+				<groupId>com.yahoo.platform.yui</groupId>
+				<artifactId>yuicompressor</artifactId>
+				<version>${yuicompressor.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>rhino</groupId>
+						<artifactId>js</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- 视图velocity模板 -->
+			<dependency>
+				<groupId>org.apache.velocity</groupId>
+				<artifactId>velocity</artifactId>
+				<version>${velocity.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>velocity</groupId>
+				<artifactId>velocity-dep</artifactId>
+				<version>${velocity.dep.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>velocity-tools</groupId>
+				<artifactId>velocity-tools</artifactId>
+				<version>${velocity.tools.version}</version>
+			</dependency>
+			<!-- LOG -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+
+			<!-- 编译时依赖 -->
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>servlet-api</artifactId>
+				<version>${servlet.api.version}</version>
+				<scope>provided</scope>
+			</dependency>
+
+			<!-- 单元测试 -->
+			<dependency>
+				<groupId>junit</groupId>
+				<artifactId>junit</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+</project>

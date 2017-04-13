@@ -1,0 +1,14 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.dao;
+
+import com.dmall.data.base.db.dao.BaseDao;
+import ${constant.getPackageName()}.${constant.entityModule}.${table.className};
+
+/**
+ * ${table.className}Dao
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public interface ${table.className}Dao extends BaseDao<${table.className}, ${table.primaryField.typeName}> {
+
+}

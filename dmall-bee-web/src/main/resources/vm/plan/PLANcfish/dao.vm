@@ -1,0 +1,15 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.dao;
+
+import ${constant.getPackageName()}.domain.${table.className};
+import ${constant.getPackageName()}.dao.base.BaseDao;
+
+/**
+ * ${table.className}Dao 接口
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public interface ${table.className}Dao extends BaseDao<${table.className},${table.primaryField.typeName}>{
+	//自定义扩展
+	
+}

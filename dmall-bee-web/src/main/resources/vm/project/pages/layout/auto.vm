@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!--样式头文件-->
+${info.cmd2}parse("common/auto-head.vm")
+	<body>
+        <!--框架头文件-->
+		${info.cmd2}parse("mainFrame/frame-header.vm")
+        <!--框架菜单文件-->
+		${info.cmd2}parse("mainFrame/frame-main.vm")
+		<!--文件footer-->
+		${info.cmd2}parse("common/bottom.vm")
+	</body>
+</html>

@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<!--样式头文件-->
+#parse("common/head.vm")
+	<body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white" style="background-color: #9A9ED8;">
+      	$screen_content
+		<!--文件footer-->
+		#parse("common/bottom.vm")
+	</body>
+</html>

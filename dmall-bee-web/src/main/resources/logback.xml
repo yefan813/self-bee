@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+
+	<property name="log.level" value="INFO" />
+	<property name="outPattern" value="[%-5p] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%C]:%L - %m%n" />
+	<property name="maxHistory" value="7" />
+
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	
+	<appender name="DEFAULT_FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${dynamic.log.path}/dmall-bee.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${dynamic.log.path}/dmall-bee.log-%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<maxHistory>${maxHistory}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${outPattern}</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="org.apache.zookeeper" level="ERROR" />
+	<logger name="com.ibatis" level="${log.level}" />
+	<logger name="com.ibatis.common.jdbc.SimpleDataSource" level="${log.level}" />
+	<logger name="com.ibatis.common.jdbc.ScriptRunner" level="${log.level}" />  
+	<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="${log.level}" />  
+	<logger name="java.sql.Connection" level="${log.level}" />  
+	<logger name="java.sql.Statement" level="${log.level}" />  
+	<logger name="java.sql.PreparedStatement" level="${log.level}" />
+	
+
+	<root level="${log.level}">    
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="DEFAULT_FILE" />
+	</root>
+
+</configuration>

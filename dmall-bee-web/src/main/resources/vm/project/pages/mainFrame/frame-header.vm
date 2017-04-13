@@ -1,0 +1,45 @@
+<div class="navbar navbar-default" id="navbar">
+    <script type="text/javascript">
+        try{ace.settings.check('navbar' , 'fixed')}catch(e){}
+		
+		function logout(){
+			bootbox.confirm("确定要退出吗?", function(result) {
+				if(result) {
+					window.location.href="$!erpModule.getTarget('/logout')";
+				}
+			});
+			
+		}
+    </script>
+    <div class="navbar-container" id="navbar-container">
+        <div class="navbar-header pull-left">
+            <a href="#" class="navbar-brand">
+                <small>
+                	<img src="${info.cmd}!erpModule.getTarget('/assets/img/logo_dmall.png')" width="90" height="23"> 
+                    多点管理系统
+                </small>
+            </a>
+            <!-- /.brand -->
+        </div>
+        <!-- /.navbar-header -->
+        <div class="navbar-header pull-right" role="navigation">
+            <ul class="nav ace-nav">
+                <li class="light-blue">
+                            <small>欢迎光临,</small>
+                            ${info.cmd}!login_context.userName
+							<button id="logout-btn" class="btn btn-xs btn-info" onclick="window.location.href='$!erpModule.getTarget('/editPWD')'" >
+								<i class="icon-lock"></i>
+                                修改密码
+                            </button>
+							<button id="logout-btn" class="btn btn-xs btn-info" onclick="logout()">
+								<i class="icon-off"></i>
+                                退出
+                            </button>
+                </li>
+            </ul>
+            <!-- /.ace-nav -->
+        </div>
+        <!-- /.navbar-header -->
+    </div>
+    <!-- /.container -->
+</div>

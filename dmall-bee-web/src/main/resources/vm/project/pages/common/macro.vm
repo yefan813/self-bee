@@ -1,0 +1,164 @@
+${info.cmd2}*自定义宏*${info.cmd2}
+${info.cmd2}${info.cmd2}分页
+${info.cmd2}macro(showPage $module $page)
+${info.cmd2}if($page != "" && $page.pageCount>0)
+	<div class="row" style='background-color: ${info.cmd2}eff3f8;'>
+		<div class="col-md-6">
+            <div class="dataTables_info" id="sample-table-2_info"><h5><small>共&nbsp;$!{page.totalCount}&nbsp;条记录&nbsp;&nbsp;$!{page.pageSize}&nbsp;条/页</small></h5></div>
+        </div>	
+		<div class="col-md-6">
+			<div class="dataTables_paginate paging_bootstrap">
+				<ul class="pagination">
+					${info.cmd2}${info.cmd2}当前显示的不是第一页记录时
+					${info.cmd2}if($page.firstPage == false)
+    					<li class="prev">
+    						<a href="$module.addQueryData("currentPage",$!{page.previousPage}).render()" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+						<li>
+							<a href="$module.addQueryData("currentPage",1).render()">1</a>
+						</li>
+					${info.cmd2}else
+						<li class="prev disabled">
+    						<a href="javascript:void(0);" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+					${info.cmd2}end
+					${info.cmd2}set($pagePos = 2) ${info.cmd2}${info.cmd2}当前页的尾巴长度
+					${info.cmd2}if($page.currentPage>$pagePos+2)
+						<li><a href="javascript:void(0);">...</a></li>${info.cmd2}${info.cmd2}显示前面的省略号
+                    ${info.cmd2}end
+					${info.cmd2}foreach($i in [$pagePos..1]) ${info.cmd2}${info.cmd2}增加前面的尾巴
+                        ${info.cmd2}if($page.currentPage - $i > 1)
+                        ${info.cmd2}set($pageIndex= $page.currentPage - $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        ${info.cmd2}end
+					${info.cmd2}end
+					<li class="active"><a href="javascript:void(0);">$!{page.currentPage}</a></li>
+					${info.cmd2}foreach($i in [1..$pagePos]) ${info.cmd2}${info.cmd2}增加后面的尾巴
+                        ${info.cmd2}if($page.pageCount - $page.currentPage - $i > 0)
+                        ${info.cmd2}set($pageIndex= $page.currentPage + $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        ${info.cmd2}end
+                    ${info.cmd2}end
+					${info.cmd2}if($page.pageCount - $page.currentPage > $pagePos+1)
+						<li><a href="javascript:void(0);">...</a></li>${info.cmd2}${info.cmd2}显示后面的省略号
+					${info.cmd2}end
+					${info.cmd2}if($page.hasNextPage())
+						<li>
+							<a href="$module.addQueryData("currentPage",$page.pageCount).render()">$page.pageCount</a>
+						</li>
+						<li class="next">
+							<a href="$module.addQueryData("currentPage",$page.nextPage).render()" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					${info.cmd2}else
+						<li class="next disabled">
+							<a href="javascript:void(0);" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					${info.cmd2}end
+				</ul>
+			</div>
+		</div>
+	</div>
+${info.cmd2}end
+${info.cmd2}end
+
+
+${info.cmd2}${info.cmd2}分页,带pageSize
+${info.cmd2}macro(showPageWithSize $module $page)
+${info.cmd2}if($page != "" && $page.pageCount>0)
+	<div class="row" style='background-color: ${info.cmd2}eff3f8;'>
+		<div class="col-md-3" >
+            <div class="dataTables_info" id="sample-table-2_info"><h5><small>共&nbsp;$!{page.totalCount}&nbsp;条记录&nbsp;&nbsp;$!{page.pageSize}&nbsp;条/页</small></h5></div>
+        </div>	
+        <div class="col-md-3">
+            <div class="dataTables_info">
+            	<label>分页大小</label>
+            	<select name="pageSize" id="pageSize" onChange="pageSizeChange(this);">
+            		<option value="10" ${info.cmd2}if($page.pageSize==10) selected ${info.cmd2}end>10</option>
+            		<option value="20" ${info.cmd2}if($page.pageSize==20) selected ${info.cmd2}end>20</option>
+            		<option value="50" ${info.cmd2}if($page.pageSize==50) selected ${info.cmd2}end>50</option>
+            		<option value="100" ${info.cmd2}if($page.pageSize==100) selected ${info.cmd2}end>100</option>
+            		<option value="150" ${info.cmd2}if($page.pageSize==150) selected ${info.cmd2}end>150</option>
+            		<option value="200" ${info.cmd2}if($page.pageSize==200) selected ${info.cmd2}end>200</option>
+            	</select>
+            </div>
+        </div>
+		<div class="col-md-6">
+			<div class="dataTables_paginate paging_bootstrap">
+				<ul class="pagination">
+					${info.cmd2}${info.cmd2}当前显示的不是第一页记录时
+					${info.cmd2}if($page.firstPage == false)
+    					<li class="prev">
+    						<a href="$module.addQueryData("currentPage",$!{page.previousPage}).render()" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+						<li>
+							<a href="$module.addQueryData("currentPage",1).render()">1</a>
+						</li>
+					${info.cmd2}else
+						<li class="prev disabled">
+    						<a href="javascript:void(0);" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+					${info.cmd2}end
+					${info.cmd2}set($pagePos = 2) ${info.cmd2}${info.cmd2}当前页的尾巴长度
+					${info.cmd2}if($page.currentPage>$pagePos+2)
+						<li><a href="javascript:void(0);">...</a></li>${info.cmd2}${info.cmd2}显示前面的省略号
+                    ${info.cmd2}end
+					${info.cmd2}foreach($i in [$pagePos..1]) ${info.cmd2}${info.cmd2}增加前面的尾巴
+                        ${info.cmd2}if($page.currentPage - $i > 1)
+                        ${info.cmd2}set($pageIndex= $page.currentPage - $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        ${info.cmd2}end
+					${info.cmd2}end
+					<li class="active"><a href="javascript:void(0);">$!{page.currentPage}</a></li>
+					${info.cmd2}foreach($i in [1..$pagePos]) ${info.cmd2}${info.cmd2}增加后面的尾巴
+                        ${info.cmd2}if($page.pageCount - $page.currentPage - $i > 0)
+                        ${info.cmd2}set($pageIndex= $page.currentPage + $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        ${info.cmd2}end
+                    ${info.cmd2}end
+					${info.cmd2}if($page.pageCount - $page.currentPage > $pagePos+1)
+						<li><a href="javascript:void(0);">...</a></li>${info.cmd2}${info.cmd2}显示后面的省略号
+					${info.cmd2}end
+					${info.cmd2}if($page.hasNextPage())
+						<li>
+							<a href="$module.addQueryData("currentPage",$page.pageCount).render()">$page.pageCount</a>
+						</li>
+						<li class="next">
+							<a href="$module.addQueryData("currentPage",$page.nextPage).render()" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					${info.cmd2}else
+						<li class="next disabled">
+							<a href="javascript:void(0);" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					${info.cmd2}end
+				</ul>
+			</div>
+		</div>
+	</div>
+${info.cmd2}end
+${info.cmd2}end
+
+

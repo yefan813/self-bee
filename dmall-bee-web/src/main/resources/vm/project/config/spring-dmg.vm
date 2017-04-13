@@ -1,0 +1,38 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd" default-autowire="byName">
+	<!-- Connector -->
+
+	<bean id="dmgConnectionFactory" class="com.dmall.dmg.sdk.core.ConnectionFactory">
+		<property name="clusterId" value="${clusterId}"/>
+		<property name="appKey" value="${appKey}"/>
+		<property name="secretKey" value="${secretKey}"/>
+		<property name="authUrl" value="${authUrl}"/>
+	</bean>
+
+	<bean id="defaultMessageProducer" class="com.dmall.dmg.sdk.core.producer.KafkaProducer">
+		<property name="connectionFactory" ref="dmgConnectionFactory"/>
+		<property name="topics">
+			<set>
+				<value>${your.produce.topic.name}</value>
+			</set>
+		</property>
+	</bean>
+
+	<bean id="defaultMessageConsumer" class="com.dmall.dmg.sdk.core.consumer.kafka.KafkaConsumerContainer">
+		<property name="connectionFactory" ref="dmgConnectionFactory" />
+		<property name="handler" ref="defaultMessageHandler" />
+		<property name="properties">
+			<props>
+				<prop key="group.id">${your.consumer.group.id}</prop>
+				<prop key="topic.name">${your.consumer.topic.name}</prop>
+				<prop key="num.consumers">1</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="defaultMessageHandler" class="${constant.getPackageName()}.service.mq.DefaultMessageHandler" />
+
+</beans>

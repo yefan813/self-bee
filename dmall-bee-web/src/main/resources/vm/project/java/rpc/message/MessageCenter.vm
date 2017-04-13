@@ -1,0 +1,44 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.rpc.message;
+
+import ${constant.getPackageName()}.common.spring.velocity.VelocitySupport.Result;
+
+/**
+ * 消息中心
+ * @author cfish
+ * @since 2013-4-18
+ */
+public interface MessageCenter {
+
+	/**
+	 * 发送邮件
+	 * @param subject
+	 * @param content
+	 * @param receiverEmail
+	 */
+	void sendEmail(String subject,String content,String... receiverEmail);
+	
+	/**
+	 * 发送邮件,采用Velocity模板
+	 * @param subject
+	 * @param result
+	 * @param vm
+	 * @param receiverEmail
+	 */
+	void sendEmailWithVM(String subject,Result result,String vm,String... receiverEmail);
+	
+	/**
+	 * 发送短信
+	 * @param content
+	 * @param receiverMobile
+	 */
+	void sendShortMsg(String content,String... receiverMobile);
+	
+	/**
+	 * 发送站内信
+	 * @param subject
+	 * @param content
+	 * @param receiverEmail
+	 */
+	void sendNoticeMsg(String subject,String content,String...receiver);
+}

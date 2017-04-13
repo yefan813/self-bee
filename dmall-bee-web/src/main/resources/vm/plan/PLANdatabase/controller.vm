@@ -1,0 +1,142 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.web.controller;
+
+import javax.annotation.Resource;
+import com.dmall.data.base.db.query.Condition;
+import com.dmall.data.base.db.query.Page;
+import com.dmall.data.base.db.query.QueryCriterion;
+import com.wm.nb.domain.common.Message;
+import ${constant.getPackageName()}.web.BaseController;
+import ${constant.getPackageName()}.service.${table.className}Service;
+import ${constant.getPackageName()}.${constant.entityModule}.${table.className};
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+/**
+ * ${table.className}controller
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+@Controller
+@RequestMapping(value = "/${tools.getVarName(${table.name})}")
+public class ${table.className}Controller extends BaseController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(${table.className}Controller.class);
+
+	@Resource
+	private ${table.className}Service ${tools.getVarName(${table.name})}Service;
+	
+	/**
+	 * 列表展示
+	 *
+	 * @param ${tools.getVarName(${table.name})} 实体对象
+	 * @param page 分页对象
+	 * @return
+	 */
+	@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
+	public String list(${table.className} ${table.varName}, Page<${table.className}> page, ModelMap model) {
+		try {
+			QueryCriterion criterion = Condition.open(${table.varName});
+			Page<${table.className}> dataPage = ${table.varName}Service.getPage(criterion, page);
+			model.put("page",dataPage);
+			return "${table.varName}/list";
+		} catch (Exception e) {
+			LOGGER.error("数据库查询异常!", e);
+		}
+		return "${table.varName}/list";
+	}
+	
+	/**
+	 * 响应新增(修改)页面
+	 *
+	 * @param ${table.primaryField.fieldName} 对象编号
+	 * @return
+	 */
+	@RequestMapping(value="/edit", method=RequestMethod.GET)
+	public String edit(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}, ModelMap model) {
+	
+		if(${table.primaryField.fieldName} != null && ${table.primaryField.fieldName} > 0) {
+			try {
+				${table.className} ${table.varName} = ${table.varName}Service.getById(${table.primaryField.fieldName});
+				if(${table.varName} == null) {
+					LOGGER.error("您要修改的数据不存在或者已被删除!");
+				}
+				model.put("${table.varName}", ${table.varName});
+			} catch (Exception e) {
+				LOGGER.error("数据库查询异常!", e);
+			}
+		}
+		return "${table.varName}/edit";
+	}
+	
+	/**
+	 * 通过编号删除对象
+	 *
+	 * @param ${table.primaryField.fieldName} 对象编号
+	 * @return
+	 */
+	@RequestMapping(value="/del", method=RequestMethod.POST)
+	@ResponseBody
+	public Message del(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		try {
+			int res = ${table.varName}Service.deleteById(${table.primaryField.fieldName});
+			Message msg  = res > 0 ? Message.success() : Message.failure();
+			return msg;
+		} catch (Exception e) {
+			LOGGER.error("数据库查询异常!", e);
+			return Message.failure("数据库删除异常!");
+		}
+	}
+	
+	/**
+	 * 通过编号查看对象
+	 *
+	 * @param ${table.primaryField.fieldName} 对象编号
+	 * @return
+	 */
+	@RequestMapping(value="/view", method=RequestMethod.GET)
+	public String view(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName},ModelMap model) {
+		if(${table.primaryField.fieldName} != null && ${table.primaryField.fieldName} > 0) {
+			try {
+				${table.className} ${table.varName} = ${table.varName}Service.getById(${table.primaryField.fieldName});
+				if(${table.varName} == null) {
+					LOGGER.error("您要修改的数据不存在或者已被删除!");
+				}
+				model.put("${table.varName}", ${table.varName});
+			} catch (Exception e) {
+				LOGGER.error("数据库查询异常!", e);
+			}
+		}
+		return "${table.varName}/view";
+	}
+	
+	/**
+	 * 保存数据
+	 *
+	 * @param ${table.varName} 实体对象
+	 * @return
+	 */
+	@RequestMapping(value="/save", method=RequestMethod.POST)
+	@ResponseBody
+	public Message save(${table.className} ${table.varName}) {
+		try {
+			if (${table.varName}.get${table.primaryField.methodName}() == null || ${table.varName}.get${table.primaryField.methodName}() < 1) {
+				${table.varName}Service.add(${table.varName});
+			} else {
+				${table.varName}Service.updateById(${table.varName});
+			}
+			return Message.success();
+		} catch (Exception e) {
+			LOGGER.error("数据库查询异常!", e);
+			return Message.failure("数据库查询异常!");
+		}
+	}
+	
+}

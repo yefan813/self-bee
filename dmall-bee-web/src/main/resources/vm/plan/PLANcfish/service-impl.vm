@@ -1,0 +1,26 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.service$!{packageExt};
+
+$!{importExt}
+import javax.annotation.Resource;
+import org.springframework.stereotype.Service;
+import ${constant.getPackageName()}.domain.${table.className};
+import ${constant.getPackageName()}.dao.${table.className}Dao;
+import ${constant.getPackageName()}.dao.base.BaseDao;
+import ${constant.getPackageName()}.service.base.BaseServiceImpl;
+
+/**
+ * ${table.className}Service 实现类
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+@Service("${tools.getVarName(${table.name})}Service")
+public class ${table.className}Service$!{classNameExt} extends BaseServiceImpl<${table.className},${table.primaryField.typeName}>$!{interExt} {
+	
+	@Resource private ${table.className}Dao ${tools.getVarName(${table.name})}Dao;
+	
+	public BaseDao<${table.className},${table.primaryField.typeName}> getDao() {
+		return ${tools.getVarName(${table.name})}Dao;
+	}
+		
+}

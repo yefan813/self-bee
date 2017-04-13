@@ -1,0 +1,22 @@
+## master
+jdbc.driver=${constant.driver}
+jdbc.url=${constant.url}
+jdbc.username=${constant.user}
+jdbc.password=${constant.pwd}
+
+jdbc.filters=stat
+jdbc.maxActive=16
+jdbc.initialSize=4
+jdbc.maxWait=60000
+jdbc.minIdle=4
+jdbc.timeBetweenEvictionRunsMillis=60000
+jdbc.minEvictableIdleTimeMillis=300000
+jdbc.validationQuery=SELECT 'x'
+jdbc.testWhileIdle=true
+jdbc.testOnBorrow=false
+jdbc.testOnReturn=false
+jdbc.poolPreparedStatements=false
+jdbc.maxOpenPreparedStatements=-1
+
+
+

@@ -1,0 +1,27 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.service;
+
+import com.dmall.data.base.db.dao.BaseDao;
+import com.dmall.data.base.service.BaseService;
+import ${constant.getPackageName()}.dao.${table.className}Dao;
+import ${constant.getPackageName()}.${constant.entityModule}.${table.className};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+/**
+ * ${table.className}Service
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+@Service
+public class ${table.className}Service extends BaseService<${table.className}, ${table.primaryField.typeName}> {
+
+    @Autowired
+    private ${table.className}Dao ${table.varName}Dao;
+
+    @Override
+    protected BaseDao<${table.className}, ${table.primaryField.typeName}> getDao() {
+        return ${table.varName}Dao;
+    }
+
+}

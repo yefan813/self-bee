@@ -1,0 +1,8 @@
+<!DOCTYPE HTML>
+<html>
+    #parse("common/head.vm")
+    <body>
+        #parse("common/main.vm")
+		#parse("common/bottom.vm")
+    </body>
+</html>

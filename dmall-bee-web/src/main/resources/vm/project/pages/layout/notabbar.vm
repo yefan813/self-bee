@@ -1,0 +1,8 @@
+<!DOCTYPE HTML>
+<html>
+    ${info.cmd2}parse("common/head.vm")
+    <body>
+        ${info.cmd2}parse("common/main.vm")
+		${info.cmd2}parse("common/bottom.vm")
+    </body>
+</html>

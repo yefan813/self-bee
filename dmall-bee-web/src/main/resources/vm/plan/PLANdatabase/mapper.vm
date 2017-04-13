@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${constant.getPackageName()}.dao.${table.className}Dao">
+
+    <!-- 查询数量,根据条件 -->
+    <select id="selectCount" parameterType="QueryCriterion" resultType="Long">
+        select count(1) from ${table.name}
+        <include refid="core.where_condition"/>
+    </select>
+
+    <!-- 查询,根据主键 -->
+    <select id="selectById" parameterType="${table.primaryField.typeName}" resultMap="${table.varName}Map">
+        select * from ${table.name}
+        where ${table.primaryField.name} = #{${table.primaryField.fieldName}}
+    </select>
+
+    <!-- 查询列表,根据条件 -->
+    <select id="selectList" parameterType="QueryCriterion" resultMap="${table.varName}Map">
+        select * from ${table.name}
+        <include refid="core.where_condition"/>
+        <include refid="core.page_condition"/>
+    </select>
+
+    <!-- 更新,根据主键 -->
+    <update id="updateById" parameterType="${table.varName}">
+        update ${table.name}
+        <include refid="update_columns"/>
+        where ${table.primaryField.name} = #{t.${table.primaryField.fieldName}}
+    </update>
+
+    <!-- 更新列表,根据条件 -->
+    <update id="updateList">
+        update ${table.name}
+        <include refid="update_columns"/>
+        <include refid="core.where_condition_pre_con"/>
+    </update>
+
+    <!-- 新增 -->
+    <insert id="insert" parameterType="${table.varName}">
+        <selectKey resultType="${table.primaryField.typeName}" keyProperty="${table.primaryField.name}" order="AFTER">
+            select last_insert_id() as ${table.primaryField.name}
+        </selectKey>
+        insert into ${table.name}
+        (${table.columns})
+        values
+        (${table.insertColumns})
+    </insert>
+
+    <!-- 删除,根据主键 -->
+    <delete id="deleteById" parameterType="${table.primaryField.typeName}">
+        delete from ${table.name} where ${table.primaryField.name} = #{${table.primaryField.fieldName}}
+    </delete>
+
+    <!-- 删除列表,根据条件 -->
+    <delete id="deleteList" parameterType="QueryCriterion">
+        delete from ${table.name}
+        <include refid="core.where_condition"/>
+    </delete>
+
+    <!-- 查询结果集 -->
+    <resultMap id="${table.varName}Map" type="${table.varName}">
+    #foreach(${field} in ${table.fields})
+    #if(${field.primaryKey}==true)<id column="$!{field.name}" property="$!{field.fieldName}"/>
+    #else<result column="$!{field.name}" property="$!{field.fieldName}"/>
+    #end#end
+</resultMap>
+
+    <!-- 更新字段列表 -->
+    <sql id="update_columns">
+        <set>
+        #foreach(${field} in ${table.fields})
+#if(${field.primaryKey}==false)#if($velocityCount==1)<if test="t.$!{field.fieldName} != null"><![CDATA[$!{field.name} = #{t.$!{field.fieldName}},]]></if>
+    #else<if test="t.$!{field.fieldName} != null"><![CDATA[$!{field.name} = #{t.$!{field.fieldName}},]]></if>
+    #end
+    #end
+#end</set>
+    </sql>
+
+</mapper>

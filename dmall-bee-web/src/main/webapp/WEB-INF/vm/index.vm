@@ -1,0 +1,612 @@
+
+#set($title="生成项目骨架")
+<!-- BEGIN HEADER -->
+<div class="page-header navbar navbar-fixed-top" style="background-color: #6569ac; height:100px;" >
+    <!-- BEGIN HEADER INNER -->
+   <div class="page-header-inner container" style="margin-top:5px;">
+       <!-- BEGIN LOGO -->
+       <div class="page-logo" >
+          <img src="../assets/global/img/dmall-bee-logo.PNG" style="margin-top:5px;" width="250" heigth="150" title="Designed by 李苏芸"/>
+       </div>
+       <!-- END LOGO -->
+       <div style="color:#9b9c96;margin-top:36px;margin-left:380px;font-family:黑体;font-style:italic">
+       		<h3>标准化、自动化、智能化生成项目框架代码......</h3>
+       </div>
+   </div>
+   <div class="pull-right">
+   		<a href="http://gitlab.dmall.com/worker-bees/dmall-bee" target="_blank">
+   			<img style="position: absolute; top: 0; right: 0; border: 0;" src="/assets/apps/img/fork_me.png"  width="100" height="100" alt="Fork me on GitLab">
+   		</a>
+   </div>
+   <!-- END HEADER INNER -->
+</div>
+<!-- END HEADER -->
+<!-- BEGIN HEADER & CONTENT DIVIDER -->
+<div class="clearfix"> </div>
+<!-- END HEADER & CONTENT DIVIDER -->
+<!-- BEGIN CONTAINER -->
+<div class="page-container" style="margin-top:80px;">
+   
+   <!-- BEGIN CONTENT -->
+   <div class="container" >
+       <!-- BEGIN CONTENT BODY -->
+       <div class="page-content" style="min-height:500px;">
+           <!-- BEGIN PAGE HEADER-->
+           <!-- BEGIN PAGE BAR -->
+           
+           <!-- END PAGE BAR -->
+           <!-- END PAGE TITLE-->
+           <!-- END PAGE HEADER-->
+           <div class="row">
+               <div class="col-md-12">
+                   <div class="portlet light bordered" id="form_wizard_1">
+                       <div class="portlet-title" style="margin-top:10px">
+                           <div class="caption">
+                               <i class=" icon-layers font-red"></i>
+                               <span class="caption-subject font-red bold uppercase"> 生成向导
+                                   <span class="step-title">第 1 步</span>
+                               </span>
+                           </div>
+                       </div>
+                       <div class="portlet-body form">
+                           <form action="#" class="form-horizontal" id="submit_form" method="POST">
+                               <div class="form-wizard">
+                                   <div class="form-body">
+                                       <ul class="nav nav-pills nav-justified steps">
+                                           <li>
+                                               <a href="#tab1" data-toggle="tab" class="step active">
+                                                   <span class="number"> 1 </span>
+                                                   <span class="desc">
+                                                       <i class="fa fa-check"></i>工程参数设置</span>
+                                               </a>
+                                           </li>
+                                           <li>
+                                               <a href="#tab2" data-toggle="tab" class="step">
+                                                   <span class="number"> 2 </span>
+                                                   <span class="desc">
+                                                       <i class="fa fa-check"></i>可选配置</span>
+                                               </a>
+                                           </li>
+                                           <li>
+                                               <a href="#tab3" data-toggle="tab" class="step">
+                                                   <span class="number"> 3 </span>
+                                                   <span class="desc">
+                                                       <i class="fa fa-check"></i>数据库设置</span>
+                                               </a>
+                                           </li>
+                                           <li>
+                                               <a href="#tab4" data-toggle="tab" class="step">
+                                                   <span class="number"> 4 </span>
+                                                   <span class="desc">
+                                                       <i class="fa fa-check"></i> 确认 </span>
+                                               </a>
+                                           </li>
+                                       </ul>
+                                       <div id="bar" class="progress progress-striped" role="progressbar">
+                                           <div class="progress-bar progress-bar-success"> </div>
+                                       </div>
+                                       <div class="tab-content">
+                                           <div class="alert alert-danger display-none">
+                                               <button class="close" data-dismiss="alert"></button> You have some form errors. Please check below. </div>
+                                           <div class="alert alert-success display-none">
+                                               <button class="close" data-dismiss="alert"></button> Your form validation is successful! </div>
+                                           <div class="tab-pane " id="tab3">
+                                               <h3 class="block">设置数据库信息</h3>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">jdbcUrl
+                                                       <span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+                                                       <input type="text" class="form-control" name="url"  value="jdbc:MySql://192.168.8.235:3306/dmall_bee?characterEncoding=UTF-8"/>
+                                                       <span class="help-block"> 填写数据库url </span>
+                                                   </div>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">用户名
+                                                       <span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+                                                       <input type="text" class="form-control" name="user" id="" value="dev"/>
+                                                       <span class="help-block"> 填写数据库用户 </span>
+                                                   </div>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">密码
+                                                       <span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+                                                       <input type="text" class="form-control" name="pwd" id="submit_form_password" value="111111"/>
+                                                       <span class="help-block"> 填写数据库密码</span>
+                                                   </div>
+                                                   
+                                                   <div class="col-md-1">
+                                                       <button type="button" class="btn btn-primary" id="validate_db">验证数据库</button>
+                                                   </div>
+                                               </div>
+                                               
+                                               <div class="form-group" style="display:none;" id="table_div">
+                                                   <label class="control-label col-md-3"> 选择表
+                                                       <span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+                                                   		<div>
+	                                                   		<label>
+	                                                   			<span><input type="checkbox" id="opp-sel" name="table-sel" ></span>反选
+	                                                   		</label>
+                                                   		</div>
+                                                   		<div class="hr"></div>
+                                                       	<div id="table-list">
+                                                        </div>
+                                                   </div>
+                                                   
+                                               </div>
+                                           </div>
+                                           <div class="tab-pane active" id="tab1">
+                                               <h3 class="block">项目参数设置</h3>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">项目名
+                                                       <span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+                                                       <input type="text" class="form-control" name="artifactId" />
+                                                       <span class="help-block"> 设置工程名 </span>
+                                                   </div>
+                                               </div>
+                                           </div>
+                                           <div class="tab-pane" id="tab2">
+                                               <h3 class="block">可选配置</h3>
+                                               <div class="form-group">
+                                                    <label class="control-label col-md-3">数据库访问方式
+                                                        <span class="required" aria-required="true"> * </span>
+                                                    </label>
+                                                    <div class="col-md-4">
+                                                        <div class="radio-list">
+                                                            <label>
+                                                                <div class="">
+                                                                	<span class="">
+                                                                		<input type="radio" name="dataAccessMode" value="PLANdatabase" data-title="data-base" checked>
+                                                                	</span>
+                                                                	data-base
+                                                                </div>  
+                                                            </label>
+                                                            <label>
+                                                                <div class="">
+                                                                	<span class="">
+                                                                		<input type="radio" name="dataAccessMode" value="PLANnbcommon" data-title="nbcommon">
+                                                                	</span>
+                                                                	nb-common
+                                                                </div> 
+                                                            </label>
+                                                             <label>
+                                                                <div class="">
+                                                                	<span class="">
+                                                                		<input type="radio" name="dataAccessMode" value="PLANempty" data-title="empty">
+                                                                	</span>
+                                                                	不生成
+                                                                </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                               
+                                               <div class="form-group">
+                                               		<label class="control-label col-md-3">
+                                               			DmallService
+                                                       <span class="required"> * </span>
+                                                   </label>
+                                                   <div class="col-md-4">
+                                                     	<div class="checkbox-list">
+                                                     	#foreach($service in  $DmallService)
+                                                        <label class="checkbox">
+                                                            <div id="">
+                                                            	<span class="checked">
+                                                            		<input type="checkbox" id="" name="depServers" value="$service" checked>
+                                                            	</span>
+                                                            	 $service
+                                                            </div>
+                                                        </label>
+                                                        #end
+                                                    </div>
+                                                    </div>
+                                               </div>
+                                               
+                                               
+                                              
+                                           </div>
+                                           <div class="tab-pane" id="tab4">
+                                               <h3 class="block">确认设置</h3>
+                                               
+                                               <h4 class="form-section">工程参数设置</h4>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">工程名:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="artifactId"> </p>
+                                                   </div>
+                                               </div>
+                                               
+                                               
+                                               <h4 class="form-section">可选功能</h4>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">数据库访问方式:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="dataAccessMode"> </p>
+                                                   </div>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">DmallService:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="depServers"> </p>
+                                                   </div>
+                                               </div>
+                                               
+                                               <h4 class="form-section">数据库设置</h4>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">数据库url:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="url"> </p>
+                                                   </div>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">数据库用户:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="user"> </p>
+                                                   </div>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">数据库密码:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="pwd"> </p>
+                                                   </div>
+                                               </div>
+                                               <div class="form-group">
+                                                   <label class="control-label col-md-3">选择的表:</label>
+                                                   <div class="col-md-4">
+                                                       <p class="form-control-static" data-display="tableNames[]"> </p>
+                                                   </div>
+                                               </div>
+                                              
+                                               
+                                           </div>
+                                       </div>
+                                   </div>
+                                   <div class="form-actions">
+                                       <div class="row">
+                                           <div class="col-md-offset-3 col-md-9">
+                                               <a href="javascript:;" class="btn default button-previous">
+                                                   <i class="fa fa-angle-left"></i> 上一步 </a>
+                                               <a href="javascript:;" class="btn btn-outline green button-next"> 下一步
+                                                   <i class="fa fa-angle-right"></i>
+                                               </a>
+                                               <a href="javascript:;" class="btn green button-submit"> 生成项目代码
+                                                   <i class="fa fa-check"></i>
+                                               </a>
+                                           </div>
+                                       </div>
+                                   </div>
+                               </div>
+                           </form>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+       <!-- END CONTENT BODY -->
+   </div>
+   <!-- END CONTENT -->
+   <!-- BEGIN QUICK SIDEBAR -->
+   
+   
+    <div id="notice" class="modal fade modal-scroll" tabindex="-1" data-replace="true">
+         <div class="modal-dialog">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                     <h4 class="modal-title">提示</h4>
+                 </div>
+                 <div class="modal-body">
+                 		<p style="color:#FF0000">请根据需要修改必要的项目参数：</p>	
+                     	<p>1. 填写dsf 的 APP NAME 和 OWNER NAME</p>
+                     	<p>2. 填写dmc 的 APPCODE </p>
+                     	<p>3. 设置dmg 的 TOPIC </p>
+                     	<p>4. 执行 mvn tomcat:run , 访问 localhost </p>
+                 </div>
+                 <div class="modal-footer">
+                     <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="close-btn">确定并下载代码</button>
+                 </div>
+             </div>
+         </div>
+     </div>
+   <script src="../assets/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+   <script type="text/javascript">
+   
+   var FormWizard = function () {
+	    return {
+	        //main function to initiate the module
+	        init: function () {
+	            if (!jQuery().bootstrapWizard) {
+	                return;
+	            }
+
+	            function format(state) {
+	                if (!state.id) return state.text; // optgroup
+	                return "<img class='flag' src='../../assets/global/img/flags/" + state.id.toLowerCase() + ".png'/>&nbsp;&nbsp;" + state.text;
+	            }
+
+	           /*  $("#country_list").select2({
+	                placeholder: "Select",
+	                allowClear: true,
+	                formatResult: format,
+	                width: 'auto', 
+	                formatSelection: format,
+	                escapeMarkup: function (m) {
+	                    return m;
+	                }
+	            }); */
+
+	            var form = $('#submit_form');
+	            var error = $('.alert-danger', form);
+	            var success = $('.alert-success', form);
+
+	            form.validate({
+	                doNotHideMessage: true, //this option enables to show the error/success messages on tab switch.
+	                errorElement: 'span', //default input error message container
+	                errorClass: 'help-block help-block-error', // default input error message class
+	                focusInvalid: false, // do not focus the last invalid input
+	                rules: {
+	                    //account
+	                    url:{
+	                    	minlength:10,
+	                    	required: true
+	                    },
+	                    user: {
+	                        minlength: 2,
+	                        required: true
+	                    },
+	                    pwd: {
+	                        minlength: 2,
+	                        required: true
+	                    },
+	                    //profile
+	                    artifactId: {
+	                    	minlength: 2,
+	                        required: true
+	                    }
+	                },
+
+	                messages: { // custom messages for radio buttons and checkboxes
+	                    'payment[]': {
+	                        required: "Please select at least one option",
+	                        minlength: jQuery.validator.format("Please select at least one option")
+	                    }
+	                },
+
+	                errorPlacement: function (error, element) { // render error placement for each input type
+	                    if (element.attr("name") == "gender") { // for uniform radio buttons, insert the after the given container
+	                        error.insertAfter("#form_gender_error");
+	                    } else if (element.attr("name") == "payment[]") { // for uniform checkboxes, insert the after the given container
+	                        error.insertAfter("#form_payment_error");
+	                    } else {
+	                        error.insertAfter(element); // for other inputs, just perform default behavior
+	                    }
+	                },
+
+	                invalidHandler: function (event, validator) { //display error alert on form submit   
+	                    success.hide();
+	                    error.show();
+	                    App.scrollTo(error, -200);
+	                },
+
+	                highlight: function (element) { // hightlight error inputs
+	                    $(element)
+	                        .closest('.form-group').removeClass('has-success').addClass('has-error'); // set error class to the control group
+	                },
+
+	                unhighlight: function (element) { // revert the change done by hightlight
+	                    $(element)
+	                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
+	                },
+
+	                success: function (label) {
+	                    if (label.attr("for") == "gender" || label.attr("for") == "payment[]") { // for checkboxes and radio buttons, no need to show OK icon
+	                        label
+	                            .closest('.form-group').removeClass('has-error').addClass('has-success');
+	                        label.remove(); // remove error label here
+	                    } else { // display success icon for other inputs
+	                        label
+	                            .addClass('valid') // mark the current input as valid and display OK icon
+	                        .closest('.form-group').removeClass('has-error').addClass('has-success'); // set success class to the control group
+	                    }
+	                },
+
+	                submitHandler: function (form) {
+	                    success.show();
+	                    error.hide();
+	                    //add here some ajax code to submit your form or just call form.submit() if you want to submit the form without ajax
+	                }
+
+	            });
+
+	            var displayConfirm = function() {
+	                $('#tab4 .form-control-static', form).each(function(){
+	                    var input = $('[name="'+$(this).attr("data-display")+'"]', form);
+	                    if (input.is(":radio")) {
+	                        input = $('[name="'+$(this).attr("data-display")+'"]:checked', form);
+	                    }
+	                    if (input.is(":text") || input.is("textarea")) {
+	                        $(this).html(input.val());
+	                    } else if (input.is("select")) {
+	                        $(this).html(input.find('option:selected').text());
+	                    } else if (input.is(":radio") && input.is(":checked")) {
+	                        $(this).html(input.attr("data-title"));
+	                    } else if ($(this).attr("data-display") == 'tableNames[]') {
+	                        var tables = [];
+	                        $('[name="tableNames[]"]:checked', form).each(function(){ 
+	                        	tables.push($(this).attr('data-title'));
+	                        });
+	                        $(this).html(tables.join("<br>"));
+	                    } else if ($(this).attr("data-display") == 'depServers') {
+	                        var tables = [];
+	                        $('[name="depServers"]:checked', form).each(function(){ 
+	                        	tables.push($(this).val());
+	                        });
+	                        $(this).html(tables.join("<br>"));
+	                    }
+	                });
+	            }
+
+	            var handleTitle = function(tab, navigation, index) {
+	                var total = navigation.find('li').length;
+	                var current = index + 1;
+	                // set wizard title
+	                $('.step-title', $('#form_wizard_1')).text('第 ' + (index + 1) + ' 步');
+	                // set done steps
+	                jQuery('li', $('#form_wizard_1')).removeClass("done");
+	                var li_list = navigation.find('li');
+	                for (var i = 0; i < index; i++) {
+	                    jQuery(li_list[i]).addClass("done");
+	                }
+
+	                if (current == 1) {
+	                    $('#form_wizard_1').find('.button-previous').hide();
+	                } else {
+	                    $('#form_wizard_1').find('.button-previous').show();
+	                }
+
+	                if (current >= total) {
+	                    $('#form_wizard_1').find('.button-next').hide();
+	                    $('#form_wizard_1').find('.button-submit').show();
+	                    displayConfirm();
+	                } else {
+	                    $('#form_wizard_1').find('.button-next').show();
+	                    $('#form_wizard_1').find('.button-submit').hide();
+	                }
+	                App.scrollTo($('.page-title'));
+	            }
+
+	            // default form wizard
+	            $('#form_wizard_1').bootstrapWizard({
+	                'nextSelector': '.button-next',
+	                'previousSelector': '.button-previous',
+	                onTabClick: function (tab, navigation, index, clickedIndex) {
+	                    return false;
+	                    
+	                    success.hide();
+	                    error.hide();
+	                    if (form.valid() == false) {
+	                        return false;
+	                    }
+	                    
+	                    handleTitle(tab, navigation, clickedIndex);
+	                },
+	                onNext: function (tab, navigation, index) {
+	                    success.hide();
+	                    error.hide();
+
+	                    if (form.valid() == false) {
+	                        return false;
+	                    }
+
+	                    handleTitle(tab, navigation, index);
+	                },
+	                onPrevious: function (tab, navigation, index) {
+	                    success.hide();
+	                    error.hide();
+
+	                    handleTitle(tab, navigation, index);
+	                },
+	                onTabShow: function (tab, navigation, index) {
+	                    var total = navigation.find('li').length;
+	                    var current = index + 1;
+	                    var $percent = (current / total) * 100;
+	                    $('#form_wizard_1').find('.progress-bar').css({
+	                        width: $percent + '%'
+	                    });
+	                }
+	            });
+
+	            $('#form_wizard_1').find('.button-previous').hide();
+	            $('#form_wizard_1 .button-submit').click(function () {
+	            	
+	            	$("#notice").modal();
+	            }).hide();
+	            
+	            $("#close-btn", "#notice").click(function(){
+	            	 App.blockUI({message:"正在生成代码。。。"});
+	            	var submit = $('#form_wizard_1 .button-submit');
+	            	submit.attr("disabled","disabled");
+	               	var ps = $("#submit_form").serialize();
+	               	window.location.href = "/bee/create?"+ps;
+	               	submit.removeAttr("disabled");
+	               	App.unblockUI();
+	            });
+	            
+	            
+	            $("#validate_db").on("click", function(){
+	            	if (form.valid() == false) {
+                        bootbox.alert("请先填写数据库信息");
+                        return false;
+                    }
+	            	
+	            	 App.blockUI({message:"正在读取数据库数据。。。"});
+	            	var data= {
+	            			url:$("input[name=url]").val(),
+	            			user:$("input[name=user]").val(),
+	            			pwd:$("input[name=pwd]").val()
+	            		};
+	            	jQuery.ajax({
+	            		url:"/bee/validDb",
+	            		data:data,
+	            		type:"post",
+	            		dataType:"json",
+	            		success:function(res){
+	            			App.unblockUI();
+	            			if(res.code == "0000"){
+	            				var list = res.data;
+	            				var cl  = $("#table-list");
+	            				cl.empty();
+	            				if(list.length > 0){
+	            					for(var i=0,len=list.length;i<len;i++){
+	            						var html = '<label><span><input type="checkbox" checked name="tableNames[]" value="'+list[i].name+'" data-title="'+list[i].name+'"></span>'+list[i].name+'</label>';
+	            						cl.append(html);
+	            					}
+	            				}else{
+	            					cl.append('<label>没有数据表</label>');
+	            				}
+	            				$("#table_div").show();
+	            			}else{
+	            				bootbox.alert(res.result);
+	            			}
+	            		},error:function(){
+	            			App.unblockUI();
+	            			bootbox.alert("网络错误");
+	            		}
+	            		
+	            	});
+	            	
+	            });
+
+	        }
+
+	    };
+
+	}();
+
+	jQuery(document).ready(function() {
+	    FormWizard.init();
+	    $("#opp-sel").change(function(){
+	    	var checked = $(this).prop("checked");
+	    	if(checked){
+	    		$("input[name='tableNames[]']").each(function(){
+	   				var c = $(this).prop("checked");
+	   				$(this).prop("checked",!c);
+	   			});
+	    	}
+	    });
+	});
+   
+   
+   </script>
+</div>
+<!-- END CONTAINER -->
+<!-- BEGIN FOOTER -->
+

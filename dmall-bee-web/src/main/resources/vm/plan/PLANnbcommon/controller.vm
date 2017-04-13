@@ -1,0 +1,108 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.web.controller;
+
+import javax.annotation.Resource;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.stereotype.Controller;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import com.wm.nb.domain.common.Message;
+import ${constant.getPackageName()}.common.spring.velocity.BaseController;
+import ${constant.getPackageName()}.common.spring.secret.AuthType;
+import ${constant.getPackageName()}.common.spring.secret.Authentication;
+import ${constant.getPackageName()}.domain.Intelligence;
+import ${constant.getPackageName()}.domain.base.Page;
+import ${constant.getPackageName()}.service.IntelligenceService;
+
+/**
+ * $!{table.remark} controller层
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+@Controller
+@RequestMapping(value = "/${tools.getVarName(${table.name})}")
+public class ${table.className}Controller extends BaseController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(${table.className}Controller.class);
+	@Resource private ${table.className}Service ${tools.getVarName(${table.name})}Service;
+	
+	/**
+	 * 列表展示
+	 * @param ${tools.getVarName(${table.name})} 实体对象
+	 * @param page 分页对象
+	 * @return
+	 */
+	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST})
+	@Authentication(type=AuthType.NONE)
+	public ModelAndView list(${table.className} ${tools.getVarName(${table.name})},Page<${table.className}> page){
+		Result result = new Result();
+		result.addDefaultModel("${tools.getVarName(${table.name})}",${tools.getVarName(${table.name})});
+		result.addDefaultModel("page",${tools.getVarName(${table.name})}Service.selectPage(${tools.getVarName(${table.name})},page));
+		return toResultSkipLayout("${tools.getVarName(${table.name})}/list",result);
+	}
+	
+	/**
+	 * 响应新增(修改)页面
+	 * @param ${table.primaryField.fieldName} 对象编号
+	 * @return
+	 */
+	@RequestMapping(value="/edit",method=RequestMethod.PUT)
+	@Authentication(type=AuthType.NONE)
+	public ModelAndView edit(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		Result result = new Result();
+		if(${table.primaryField.fieldName} != null && ${table.primaryField.fieldName} > 0) {
+			${table.className} ${tools.getVarName(${table.name})} = ${tools.getVarName(${table.name})}Service.selectEntry(${table.primaryField.fieldName});
+			if(${tools.getVarName(${table.name})} == null) {
+				return toJSON(Message.failure("您要修改的数据不存在或者已被删除!"));
+			}
+			result.addDefaultModel("${tools.getVarName(${table.name})}",${tools.getVarName(${table.name})});
+		}
+		return toResultSkipLayout("${tools.getVarName(${table.name})}/edit",result);
+	}
+	
+	/**
+	 * 通过编号删除对象
+	 * @param ${table.primaryField.fieldName} 对象编号
+	 * @return
+	 */
+	@RequestMapping(value="/del",method=RequestMethod.DELETE)
+	@Authentication(type=AuthType.NONE)
+	public ModelAndView del(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		int res = ${tools.getVarName(${table.name})}Service.deleteByKey(${table.primaryField.fieldName});
+		Message msg  = res > 0 ? Message.success() : Message.failure();
+		return toJSON(msg);
+	}
+	
+	/**
+	 * 通过编号查看对象
+	 * @param ${table.primaryField.fieldName} 对象编号
+	 * @return
+	 */
+	@RequestMapping(value="/view",method=RequestMethod.GET)
+	@Authentication(type=AuthType.NONE)
+	public ModelAndView view(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		Result result = new Result();
+		${table.className} ${tools.getVarName(${table.name})} = ${tools.getVarName(${table.name})}Service.selectEntry(${table.primaryField.fieldName});
+		if(${tools.getVarName(${table.name})} == null) {
+			return toJSON(Message.failure("您要查看的数据不存在或者已被删除!"));
+		}
+		result.addDefaultModel("${tools.getVarName(${table.name})}",${tools.getVarName(${table.name})});
+		return toResultSkipLayout("${tools.getVarName(${table.name})}/view",result);
+	}
+	
+	/**
+	 * 保存方法
+	 * @param ${tools.getVarName(${table.name})} 实体对象
+	 * @return
+	 */
+	@RequestMapping(value="/save",method=RequestMethod.POST)
+	@Authentication(type=AuthType.NONE)
+	public ModelAndView save(${table.className} ${tools.getVarName(${table.name})}){
+		int res = ${tools.getVarName(${table.name})}Service.saveOrUpdate(${tools.getVarName(${table.name})});
+		Message msg  = res > 0 ? Message.success() : Message.failure();
+		return toJSON(msg);
+	}
+	
+}

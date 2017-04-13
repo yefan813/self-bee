@@ -1,0 +1,17 @@
+#set($title="会员系统")
+<div class="breadcrumbs">
+    <ul class="breadcrumb" id="breadcrumbs">
+        <li>
+            <i class="icon-home home-icon"></i>
+            <a href="/">首页</a>
+        </li>
+     </ul>
+    <!-- .breadcrumb -->
+</div>
+<div class="page-content">
+    <div class="well" >
+       <img src="/assets/img/logoBJS_dark.png" width="180" height="90"> 
+       <span class="label label-warning">欢迎进入物美尚佳会员管理系统，请点击左侧菜单开始工作</span>
+    </div>
+    
+</div>

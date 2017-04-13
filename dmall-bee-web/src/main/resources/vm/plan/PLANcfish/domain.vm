@@ -1,0 +1,45 @@
+#parse("project/java/copyright.vm")
+package ${constant.getPackageName()}.domain;
+
+#foreach(${type} in ${table.imports})
+import ${type.name};
+#end
+import ${constant.getPackageName()}.domain.base.BaseDomain;
+
+/**
+ * $!{table.remark}
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public class ${table.className} extends BaseDomain {
+	private static final long serialVersionUID = 1L;
+#foreach(${field} in ${table.fields})
+#if(${field.skip}==false)
+	private ${field.type.simpleName} ${field.fieldName};
+#end	
+#end
+
+	public ${table.className}(){
+		//默认无参构造方法
+	}
+#foreach(${field} in ${table.fields})
+#if(${field.skip}==false)
+
+	/**
+	 * 获取 ${field.remark}
+	 * @return
+	 */
+	public ${field.type.simpleName} ${field.methodPrefix}${field.methodName}(){
+		return ${field.fieldName};
+	}
+	
+	/**
+	 * 设置 ${field.remark}
+	 * @param ${field.fieldName}
+	 */
+	public void set${field.methodName}(${field.type.simpleName} ${field.fieldName}){
+		this.${field.fieldName} = ${field.fieldName};
+	}
+#end
+#end
+}

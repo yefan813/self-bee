@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>#if($title)$title - 物美会员管理系统#else 物美会员管理系统 #end</title>
+	</head>
+<body>
+    $screen_content
+</body>
+</html>

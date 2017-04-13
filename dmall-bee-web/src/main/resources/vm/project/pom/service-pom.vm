@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>${constant.getPackageGroupId()}</groupId>
+		<artifactId>${constant.getProjectArtifactId()}</artifactId>
+		<version>${constant.getProjectVersion()}</version>
+	</parent>
+
+	<artifactId>${constant.getProjectArtifactId()}-service</artifactId>
+	<packaging>jar</packaging>
+	<name>${constant.getProjectArtifactId()}-service</name>
+
+	<dependencies>
+        <!-- dmall -->
+#foreach($depServer in ${constant.depServers})
+		<dependency>
+			<groupId>$depServer.getGroupId()</groupId>
+			<artifactId>$depServer.getArtifactId()</artifactId>
+		</dependency>
+#end
+
+		<!-- dao -->
+		<dependency>
+			<groupId>${constant.getPackageGroupId()}</groupId>
+			<artifactId>${constant.getProjectArtifactId()}-dao</artifactId>
+            <version>${project.parent.version}</version>
+		</dependency>
+
+		<!-- 单元相关 -->
+		<dependency>
+			<artifactId>junit</artifactId>
+			<groupId>junit</groupId>
+		</dependency>
+	</dependencies>
+</project>

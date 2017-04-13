@@ -1,0 +1,209 @@
+#*自定义宏*#
+##分页
+#macro(showPage $module $page)
+#if($page != "" && $page.pageCount>0)
+	<div class="row" style='background-color: #eff3f8;'>
+		<div class="col-md-6">
+            <div class="dataTables_info" id="sample-table-2_info"><h5><small>共&nbsp;$!{page.totalCount}&nbsp;条记录&nbsp;&nbsp;$!{page.pageSize}&nbsp;条/页</small></h5></div>
+        </div>	
+		<div class="col-md-6">
+			<div class="dataTables_paginate paging_bootstrap">
+				<ul class="pagination">
+					##当前显示的不是第一页记录时
+					#if($page.firstPage == false)
+    					<li class="prev">
+    						<a href="$module.addQueryData("currentPage",$!{page.previousPage}).render()" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+						<li>
+							<a href="$module.addQueryData("currentPage",1).render()">1</a>
+						</li>
+					#else
+						<li class="prev disabled">
+    						<a href="javascript:void(0);" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+					#end
+					#set($pagePos = 2) ##当前页的尾巴长度
+					#if($page.currentPage>$pagePos+2)
+						<li><a href="javascript:void(0);">...</a></li>##显示前面的省略号
+                    #end
+					#foreach($i in [$pagePos..1]) ##增加前面的尾巴
+                        #if($page.currentPage - $i > 1)
+                        #set($pageIndex= $page.currentPage - $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        #end
+					#end
+					<li class="active"><a href="javascript:void(0);">$!{page.currentPage}</a></li>
+					#foreach($i in [1..$pagePos]) ##增加后面的尾巴
+                        #if($page.pageCount - $page.currentPage - $i > 0)
+                        #set($pageIndex= $page.currentPage + $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        #end
+                    #end
+					#if($page.pageCount - $page.currentPage > $pagePos+1)
+						<li><a href="javascript:void(0);">...</a></li>##显示后面的省略号
+					#end
+					#if($page.hasNextPage())
+						<li>
+							<a href="$module.addQueryData("currentPage",$page.pageCount).render()">$page.pageCount</a>
+						</li>
+						<li class="next">
+							<a href="$module.addQueryData("currentPage",$page.nextPage).render()" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					#else
+						<li class="next disabled">
+							<a href="javascript:void(0);" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					#end
+				</ul>
+			</div>
+		</div>
+	</div>
+#end
+#end
+
+
+##分页,带pageSize
+#macro(showPageWithSize $module $page)
+#if($page != "" && $page.pageCount>0)
+	<div class="row" style='background-color: #eff3f8;'>
+		<div class="col-md-3" >
+            <div class="dataTables_info" id="sample-table-2_info"><h5><small>共&nbsp;$!{page.totalCount}&nbsp;条记录&nbsp;&nbsp;$!{page.pageSize}&nbsp;条/页</small></h5></div>
+        </div>	
+        <div class="col-md-3">
+            <div class="dataTables_info">
+            	<label>分页大小</label>
+            	<select name="pageSize" id="pageSize" onChange="pageSizeChange(this);">
+            		<option value="10" #if($page.pageSize==10) selected #end>10</option>
+            		<option value="20" #if($page.pageSize==20) selected #end>20</option>
+            		<option value="50" #if($page.pageSize==50) selected #end>50</option>
+            		<option value="100" #if($page.pageSize==100) selected #end>100</option>
+            		<option value="150" #if($page.pageSize==150) selected #end>150</option>
+            		<option value="200" #if($page.pageSize==200) selected #end>200</option>
+            	</select>
+            </div>
+        </div>
+		<div class="col-md-6">
+			<div class="dataTables_paginate paging_bootstrap">
+				<ul class="pagination">
+					##当前显示的不是第一页记录时
+					#if($page.firstPage == false)
+    					<li class="prev">
+    						<a href="$module.addQueryData("currentPage",$!{page.previousPage}).render()" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+						<li>
+							<a href="$module.addQueryData("currentPage",1).render()">1</a>
+						</li>
+					#else
+						<li class="prev disabled">
+    						<a href="javascript:void(0);" title='上一页' alt='上一页'>
+            					<i class="icon-double-angle-left"></i>
+            				</a>
+    					</li>
+					#end
+					#set($pagePos = 2) ##当前页的尾巴长度
+					#if($page.currentPage>$pagePos+2)
+						<li><a href="javascript:void(0);">...</a></li>##显示前面的省略号
+                    #end
+					#foreach($i in [$pagePos..1]) ##增加前面的尾巴
+                        #if($page.currentPage - $i > 1)
+                        #set($pageIndex= $page.currentPage - $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        #end
+					#end
+					<li class="active"><a href="javascript:void(0);">$!{page.currentPage}</a></li>
+					#foreach($i in [1..$pagePos]) ##增加后面的尾巴
+                        #if($page.pageCount - $page.currentPage - $i > 0)
+                        #set($pageIndex= $page.currentPage + $i)
+							<li>
+								<a href="$module.addQueryData("currentPage",$pageIndex).render()">$!{pageIndex}</a>
+							</li>
+                        #end
+                    #end
+					#if($page.pageCount - $page.currentPage > $pagePos+1)
+						<li><a href="javascript:void(0);">...</a></li>##显示后面的省略号
+					#end
+					#if($page.hasNextPage())
+						<li>
+							<a href="$module.addQueryData("currentPage",$page.pageCount).render()">$page.pageCount</a>
+						</li>
+						<li class="next">
+							<a href="$module.addQueryData("currentPage",$page.nextPage).render()" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					#else
+						<li class="next disabled">
+							<a href="javascript:void(0);" title='下一页' alt='下一页'>
+								<i class="icon-double-angle-right"></i>
+							</a>
+						</li>
+					#end
+				</ul>
+			</div>
+		</div>
+	</div>
+#end
+#end
+
+#macro (showMemberTypeName $memberType)
+    #if($memberType == 1)
+		个人会员主卡
+	#elseif($memberType == 2)
+		商业会员主卡
+	#elseif($memberType == 3)
+		体验卡
+	#elseif($memberType == 4)
+		员工卡
+	#elseif($memberType == 5)
+		家庭卡
+	#elseif($memberType == 6)
+		公司卡	
+    #end
+#end
+
+#macro (showMemberCredTypeName $memberCredType)
+    #if($memberCredType == 1)
+		身份证
+	#elseif($memberCredType == 2)
+		护照
+	#elseif($memberCredType == 3)
+		驾照
+	#elseif($memberCredType == 4)
+		军官证
+	#elseif($memberCredType == 5)
+		户口薄
+	#end
+#end
+
+#macro (showMemberSexName $memberNation)
+    #if($memberNation == 1)
+		男
+	#elseif($memberNation == 2)
+		女
+    #end
+#end
+
+#macro (showMemberStatusName $memberStatus)
+    #if($memberStatus == 1)
+		正常
+	#elseif($memberStatus == -1)
+		冻结
+    #end
+#end
+

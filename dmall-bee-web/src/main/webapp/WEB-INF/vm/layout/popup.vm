@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--样式头文件-->
+#parse("common/head.vm")
+	<body>
+	     $screen_content
+	</body>
+</html>

@@ -1,0 +1,62 @@
+package ${constant.getPackageName()}.web;
+
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.context.request.WebRequest;
+import com.wm.nb.web.CustomDateEditor;
+import ${constant.getPackageName()}.common.ServletContextUtil;
+import ${constant.getPackageName()}.common.exception.AppException;
+import com.wm.nb.web.WmBaseController;;
+
+
+
+
+/**
+ * BaseController
+ * @author ${constant.getProjectAuthor()}
+ * @since ${tools.dateFormat("yyyy-MM-dd")}
+ */
+public class BaseController extends WmBaseController {
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder, WebRequest request) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(true));
+	}
+	
+	/**
+	 * 获取请求对象
+	 * @return
+	 */
+	protected HttpServletRequest getRequest() {
+		return ServletContextUtil.getContext().getRequest();
+	}
+	
+	/**
+	 * 获取响应对象
+	 * @return
+	 */
+	protected HttpServletResponse getResponse() {
+		return ServletContextUtil.getContext().getResponse();
+	}
+	
+	/**
+	 * 跳转
+	 * @param location
+	 */
+	protected void sendRedirect(String location) {
+		try {
+			HttpServletResponse response = getResponse();
+			response.sendRedirect(location);
+		} catch (Exception e) {
+			throw new AppException(e);
+		}
+	}
+	
+}

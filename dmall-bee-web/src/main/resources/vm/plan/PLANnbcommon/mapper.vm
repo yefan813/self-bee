@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${constant.getPackageName()}.dao.${table.className}Dao">
+
+	<!-- 表字段 -->
+	<sql id="QUERY_COLUMN_LIST">
+		<![CDATA[${table.columnsAS}]]>
+	</sql>
+
+    <!-- 更新列字段,只要不为NULL则更新,除开主键列 -->
+    <sql id="UPDATE_COLUMN_SET">
+        <set>
+#foreach(${field} in ${table.fields})
+    #if(${field.primaryKey}==false)
+        <if test="$!{field.fieldName} != null"><![CDATA[$!{field.name} = #{$!{field.fieldName}},]]></if>
+    #end
+#end
+        </set>
+    </sql>
+
+	<!-- 查询列来源表-->
+	<sql id="QUERY_FROM_TABLE"><![CDATA[FROM ${table.name}]]></sql>
+	
+	<!-- 全部条件(更多功能可以通过queryData扩展实现)  -->
+	<sql id="QUERY_WHERE_CLAUSE">
+		<where>
+#foreach(${field} in ${table.fields})
+			<if test="$!{field.fieldName} != null and $!{field.fieldName} != ''"><![CDATA[AND $!{field.name} = #{$!{field.fieldName}}]]></if>
+#end
+		</where>
+	</sql>
+	
+	<!-- 智能排序与分页 -->
+	<sql id="QUERY_ORDER_LIMIT_CONDTION">
+		<if test="orderField != null and orderField != '' and orderFieldType != null and orderFieldType != ''"><![CDATA[ORDER BY ${orderField} ${orderFieldType}]]></if>
+		<if test="startIndex != null and startIndex &gt;= 0 and pageSize != null and pageSize &gt; 0"><![CDATA[LIMIT #{startIndex},#{pageSize}]]></if>
+	</sql>
+
+    <!-- 插入一个数据持久化对象(含所有字段) -->
+    <insert id="insertEntry" parameterType="${constant.getPackageName()}.${constant.entityModule}.${table.className}" useGeneratedKeys="true" keyProperty="${table.primaryField.name}">
+        <![CDATA[
+        INSERT INTO ${table.name} (${table.columns})
+        VALUES (${table.insertColumns})
+        ]]>
+    </insert>
+
+    <!-- 根据主键删除数据持久化对象 -->
+    <delete id="deleteByKey" parameterType="${table.primaryField.typeName}">
+        DELETE FROM ${table.name} WHERE ${table.primaryField.name} = #{${table.primaryField.fieldName}}
+    </delete>
+
+    <!-- 删除记录,主键IN(array) -->
+    <delete id="deleteByArrayKey" parameterType="java.lang.reflect.Array" >
+        <![CDATA[DELETE FROM ${table.name} WHERE ${table.primaryField.name} IN]]>
+        <foreach collection="array" item="${table.primaryField.fieldName}" open="(" separator="," close=")">
+            <![CDATA[#{${table.primaryField.fieldName}}]]>
+        </foreach>
+    </delete>
+
+    <!-- 删除,通过条件 -->
+    <update id="deleteByCondtion" parameterType="${constant.getPackageName()}.${constant.entityModule}.${table.className}" >
+        <![CDATA[DELETE FROM ${table.name}]]>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </update>
+
+    <!-- 根据主键修改数据持久化对象 -->
+    <update id="updateByKey" parameterType="${constant.getPackageName()}.${constant.entityModule}.${table.className}" >
+        <![CDATA[UPDATE ${table.name}]]>
+        <include refid="UPDATE_COLUMN_SET"/>
+        <![CDATA[WHERE ${table.primaryField.name} = #{${table.primaryField.fieldName}}]]>
+    </update>
+
+    <!-- 根据主键查询并返回数据持久化对象 -->
+    <select id="selectByKey" resultType="${constant.getPackageName()}.${constant.entityModule}.${table.className}">
+        <![CDATA[SELECT]]>
+        <include refid="QUERY_COLUMN_LIST" />
+        <![CDATA[FROM ${table.name} WHERE ${table.primaryField.name} = #{${table.primaryField.fieldName}}]]>
+    </select>
+
+    <!-- 根据条件统计行数 -->
+    <select id="selectEntryListCount" parameterType="${constant.getPackageName()}.${constant.entityModule}.${table.className}" resultType="Integer">
+        <![CDATA[SELECT COUNT(1) AS dataCount]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+    <!-- 查询,通过主键IN(array) -->
+    <select id="selectEntryArray" parameterType="java.lang.reflect.Array" resultType="${constant.getPackageName()}.${constant.entityModule}.${table.className}">
+        <![CDATA[SELECT]]>
+        <include refid="QUERY_COLUMN_LIST"/>
+        <include refid="QUERY_FROM_TABLE"/>
+        <![CDATA[WHERE ${table.primaryField.name} IN]]>
+        <foreach collection="array" item="${table.primaryField.fieldName}" open="(" separator="," close=")">
+            <![CDATA[#{${table.primaryField.fieldName}}]]>
+        </foreach>
+    </select>
+
+    <!-- 查询,通过条件 -->
+    <select id="selectEntryList" parameterType="${constant.getPackageName()}.${constant.entityModule}.${table.className}" resultType="${constant.getPackageName()}.${constant.entityModule}.${table.className}">
+        <![CDATA[SELECT]]>
+        <include refid="QUERY_COLUMN_LIST"/>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+        <include refid="QUERY_ORDER_LIMIT_CONDTION"/>
+    </select>
+
+</mapper>

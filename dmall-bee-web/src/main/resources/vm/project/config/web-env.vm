@@ -1,0 +1,37 @@
+
+# MQ Connector
+clusterId=3
+appKey=yourAppKey
+secretKey=yourSecretKey
+authUrl=http://testapi.dmg.dmall.com/hessian/dmgService
+
+#MQ Producer
+your.produce.topic.name=yourTopicName
+
+#MQ Consumer
+your.consumer.group.id=yourConsumerGroupId
+your.consumer.topic.name=yourConsumerTopicName
+
+#velocity start
+velocity.layoutUrl=layout/default.vm
+velocity.velocimacro.library=common/macro.vm
+
+# Other Setting
+project.build.sourceEncoding=UTF-8
+domain.name=your.dommin.dmall.com
+erp.domain.name=deverp.dmall.com
+autodeploy.default.chartset=utf8
+
+# dubbo config
+zookeeper.address=zookeeper://192.168.8.236:2181?backup=192.168.8.237:2181,192.168.8.238:2181
+
+cookie.aes.key=i0380w330bwda14m
+job.autoStartup=true
+devMode=true
+
+#dmc
+dmc.projectCode=your dmc.projectCode
+dmc.appCode=your dmc.appCode
+startupMonitor=false
+
+log.level=DEBUG

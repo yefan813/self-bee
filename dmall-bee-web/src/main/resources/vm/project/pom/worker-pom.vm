@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>${constant.getPackageGroupId()}</groupId>
+		<artifactId>${constant.getProjectArtifactId()}</artifactId>
+		<version>${constant.getProjectVersion()}</version>
+	</parent>
+
+	<artifactId>${constant.getProjectArtifactId()}-worker</artifactId>
+	<packaging>jar</packaging>
+	<name>${constant.getProjectArtifactId()}-worker</name>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.6</source>
+					<target>1.6</target>
+					<encoding>${constant.getProjectEncoding()}</encoding>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<dependencies>
+		<!-- service -->
+		<dependency>
+			<groupId>${constant.getPackageGroupId()}</groupId>
+			<artifactId>${constant.getProjectArtifactId()}-service</artifactId>
+			<version>${project.parent.version}</version>
+##          <version>${constant.getProjectVersion()}</version>
+		</dependency>
+
+		<!-- 单元测试 -->
+		<dependency>
+			<artifactId>junit</artifactId>
+			<groupId>junit</groupId>
+		</dependency>
+	</dependencies>
+</project>

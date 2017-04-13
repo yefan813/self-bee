@@ -1,0 +1,19 @@
+<form name="${tools.getVarName(${table.name})}UpdateForm" action="/${tools.getVarName(${table.name})}/save" method="POST" data-resultType="JSON">
+	<table class="table table-bordered table-striped formLayout m0">
+#set($temp=0)
+#foreach(${field} in ${table.fields})
+#if($temp % 2 == 0)
+		<tr>
+#end
+			<td>${field.remark}:</td>
+			<td#if($velocityCount == ${table.fields.size()}&&$velocityCount % 2 == 1) colspan="3"#end><input type="text" name="${field.fieldName}" value="${info.cmd}!{${tools.getVarName(${table.name})}.${field.fieldName}}" maxLength="${field.length}" placeholder="${field.remark}"#if(${field.primaryKey}) readonly#end/></td>
+#set($temp = $temp + 1)
+#if($temp % 2 == 0 || $velocityCount == ${table.fields.size()})
+		</tr>
+#end
+#end
+	</table>
+</form>
+<div class="bottomBar">
+	<button class="btn btn-primary" onclick="$('form[name=${tools.getVarName(${table.name})}UpdateForm]').submit()">保存更改</button>
+</div>

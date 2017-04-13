@@ -1,0 +1,47 @@
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	default-autowire="byName">
+
+	<!-- 加载属性文件 -->
+	<context:property-placeholder location="classpath:env/${info.cmd}{env}.properties" />
+	<!-- 使用admiral配置时打开 -->
+
+    <!-- <bean id="propertyPlaceholderConfigurer"
+          class="com.dmall.admiral.client.spring.AdmiralPlaceholderConfigurer"
+          destroy-method="close">
+        <constructor-arg index="0" value="remote"></constructor-arg>
+        <constructor-arg index="1" value="prod"></constructor-arg>
+        <constructor-arg index="2" value="${appName}"></constructor-arg>
+        <constructor-arg index="3" value="${appKey}"></constructor-arg>
+        <constructor-arg index="4" value="${secretKey}"></constructor-arg>
+        <constructor-arg index="5">
+            <list>
+                <value>classpath:env/dev.properties</value>
+            </list>
+        </constructor-arg>
+    </bean> -->
+
+	<!-- 自动注入ApplicationContext -->
+	<bean class="${constant.getPackageName()}.common.spring.ApplicationContextUtil"/>
+	
+	 <!--dmc config-->
+
+	#if(${constant.isDmc()})
+	<bean id="monitorConfig"   class="com.dmall.monitor.sdk.MonitorConfig" init-method="monitorInit">
+		<constructor-arg name="projectCode" value="${dmc.projectCode}" />
+		<constructor-arg name="appCode" value="${dmc.appCode}" />
+		<constructor-arg name="startupMonitor" value="${startupMonitor}"></constructor-arg>
+	</bean>
+	#end
+	<!-- 导入分类配置 -->
+	<import resource="spring-mvc.xml" />
+	<import resource="classpath*:spring-service.xml" />
+	<import resource="classpath*:spring-dao.xml" />
+	<!-- 请手动引入  -->
+	<!-- <import resource="classpath*:spring-dmg.xml" /> -->
+	<import resource="classpath*:spring-dsf-all.xml" />
+</beans>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    		http://www.springframework.org/schema/beans/spring-beans.xsd
+    		http://www.springframework.org/schema/tx
+       		http://www.springframework.org/schema/tx/spring-tx.xsd
+       		http://www.springframework.org/schema/context
+     		http://www.springframework.org/schema/context/spring-context.xsd"
+       default-autowire="byName">
+
+	<context:component-scan base-package="${constant.getPackageName()}.dao"/>
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+	<bean id="batchSqlTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="masterSqlSessionFactory" />
+		<constructor-arg index="1" value="BATCH" />
+	</bean>
+
+	<!-- 配置事务管理器 -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="masterPostgreSqlDataSource" />
+	</bean>
+
+	<!-- master 数据源 -->
+	<bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="filters" value="${jdbc.filters}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <property name="maxWait" value="${jdbc.maxWait}" />
+        <property name="minIdle" value="${jdbc.minIdle}" />
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>${jdbc.timeBetweenEvictionRunsMillis}</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+            <value>${jdbc.minEvictableIdleTimeMillis}</value>
+        </property>
+        <property name="validationQuery">
+            <value>${jdbc.validationQuery}</value>
+        </property>
+        <property name="testWhileIdle">
+            <value>${jdbc.testWhileIdle}</value>
+        </property>
+        <property name="testOnBorrow">
+            <value>${jdbc.testOnBorrow}</value>
+        </property>
+        <property name="testOnReturn">
+            <value>${jdbc.testOnReturn}</value>
+        </property>
+        <property name="poolPreparedStatements">
+            <value>${jdbc.poolPreparedStatements}</value>
+        </property>
+        <property name="maxOpenPreparedStatements">
+            <value>${jdbc.maxOpenPreparedStatements}</value>
+        </property>
+	</bean>
+
+    <bean id="masterSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="masterDataSource"/>
+        <property name="configLocation" value="classpath:sqlmap-config.xml"/>
+    </bean>
+    <bean id="masterSqlTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg index="0" ref="masterSqlSessionFactory" />
+	</bean>
+
+    <!-- slave 数据源 -->
+    <bean id="slaveDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+        <property name="url" value="${jdbc.url}" />
+        <property name="username" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="driverClassName" value="${jdbc.driver}" />
+        <property name="filters" value="${jdbc.filters}" />
+        <property name="maxActive" value="${jdbc.maxActive}" />
+        <property name="initialSize" value="${jdbc.initialSize}" />
+        <property name="maxWait" value="${jdbc.maxWait}" />
+        <property name="minIdle" value="${jdbc.minIdle}" />
+        <property name="timeBetweenEvictionRunsMillis">
+            <value>${jdbc.timeBetweenEvictionRunsMillis}</value>
+        </property>
+        <property name="minEvictableIdleTimeMillis">
+            <value>${jdbc.minEvictableIdleTimeMillis}</value>
+        </property>
+        <property name="validationQuery">
+            <value>${jdbc.validationQuery}</value>
+        </property>
+        <property name="testWhileIdle">
+            <value>${jdbc.testWhileIdle}</value>
+        </property>
+        <property name="testOnBorrow">
+            <value>${jdbc.testOnBorrow}</value>
+        </property>
+        <property name="testOnReturn">
+            <value>${jdbc.testOnReturn}</value>
+        </property>
+        <property name="poolPreparedStatements">
+            <value>${jdbc.poolPreparedStatements}</value>
+        </property>
+        <property name="maxOpenPreparedStatements">
+            <value>${jdbc.maxOpenPreparedStatements}</value>
+        </property>
+    </bean>
+
+    <bean id="slaveSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="slaveDataSource"/>
+        <property name="configLocation" value="classpath:sqlmap-config.xml"/>
+    </bean>
+    <bean id="slaveSqlTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="slaveSqlSessionFactory" />
+    </bean>
+</beans>

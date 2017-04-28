@@ -27,7 +27,7 @@
 ### 蜜蜂项目地址：
 
 ```
-$> git clone git@gitlab.dmall.com:worker-bees/dmall-bee.git
+$> git clone git@github.com:yefan813/self-bee.git
 $> cd dmall-bee
 $> mvn clean install tomcat:run
 访问：http://127.0.0.1:8080/
@@ -46,9 +46,4 @@ $> mvn clean install tomcat:run
 - 和DSF打通，直接勾选需要的服务接口，并生成配置和代码
 - 和DMG打通，直接勾选需要的TOPIC，并生成配置和代码
 
-### 项目贡献者
-- 黄江
-- 雷林周
-- 陈先华
-- 吕位清
-- 李苏芸
+

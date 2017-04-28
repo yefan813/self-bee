@@ -1,11 +1,9 @@
 package com.dmall.bee.web;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.dmall.bee.AppEngineNew;
+import com.dmall.bee.domain.AppInfo;
+import com.dmall.bee.util.MetaDataUtil;
+import com.wm.nb.domain.common.HttpResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -15,11 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dmall.bee.AppEngineNew;
-import com.dmall.bee.domain.AppInfo;
-import com.dmall.bee.domain.DmallService;
-import com.dmall.bee.util.MetaDataUtil;
-import com.wm.nb.domain.common.HttpResult;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @Controller
 public class BeeController extends BaseController {
@@ -34,7 +31,7 @@ public class BeeController extends BaseController {
 	 */
 	@RequestMapping(value={"","/bee"} ,method = { RequestMethod.POST, RequestMethod.GET })
 	public String index(ModelMap model) {
-		model.put("DmallService", DmallService.values());
+//		model.put("DmallService", DmallService.values());
 		return "index";
 	}
 	

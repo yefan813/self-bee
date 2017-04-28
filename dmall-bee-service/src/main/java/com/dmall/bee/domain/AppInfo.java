@@ -5,16 +5,16 @@ import java.util.List;
 
 /**
  * 数据库信息
- * @author huangjiang
+ * @author yefan
  * @since
  */
 public class AppInfo {
 
-    protected String groupId = "com.dmall";
+    protected String groupId = "com.app";
 
     protected String artifactId;
 
-    protected String author = "dmall-bee";
+    protected String author = "bee";
 
     protected String driver = "com.mysql.jdbc.Driver";
 
@@ -38,7 +38,7 @@ public class AppInfo {
 
     protected String dataAccessMode = "PLANnbcommon";//数据访问模式 [nbcommon模式、database模式、cfish模式]
 
-    protected String entityModule = "pojo";//pojo、domain、vo、dto、javabean
+    protected String entityModule = "domain";//pojo、domain、vo、dto、javabean
 
     public List<DmallService> getDepServers() {
         return depServers;

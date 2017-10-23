@@ -2,8 +2,8 @@ package com.dmall.bee.web;
 
 import com.dmall.bee.AppEngineNew;
 import com.dmall.bee.domain.AppInfo;
+import com.dmall.bee.domain.RemoteResult;
 import com.dmall.bee.util.MetaDataUtil;
-import com.wm.nb.domain.common.HttpResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.rmi.Remote;
 
 @Controller
 public class BeeController extends BaseController {
@@ -67,13 +68,13 @@ public class BeeController extends BaseController {
 	 */
 	@RequestMapping(value="/bee/validDb",method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
-	public HttpResult del(AppInfo info) {
+	public RemoteResult del(AppInfo info) {
 			try {
 				MetaDataUtil.getTables(info);
-				return HttpResult.success("",info.getTables());
+				return RemoteResult.success();
 			} catch (Exception e) {
 				BASE_LOG.error("验证失败", e);
-				return HttpResult.failure("验证失败:"+e.getMessage());
+				return RemoteResult.failure("验证失败:"+e.getMessage());
 			}
 	}
 }

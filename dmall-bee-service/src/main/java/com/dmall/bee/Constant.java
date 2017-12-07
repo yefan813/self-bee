@@ -16,7 +16,7 @@ public class Constant {
 	
 	private final static String PATH_PROJECT = "project.path";
 	
-	private final static String GROUP_ID = "com.dmall";
+	private final static String GROUP_ID = "com.frame";
 	
 	/**
 	 * 是否删除原项目

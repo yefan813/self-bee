@@ -271,11 +271,4 @@ public class ProjectGenerator extends CodeFactory {
 		}
 		return size;
 	}
-	
-	public static void main(String[] args) throws IOException {
-		/*copy(new File("E:\\works\\dms\\dmall-emp\\dmall-emp-manage\\src\\main\\webapp\\assets\\font\\fontawesome-webfont.ttf"), 
-				new File("E:\\fontawesome-webfont.ttf"));*/
-		FileCopyUtils.copy(new File("E:\\works\\dms\\dmall-bee\\dmall-bee-web\\src\\main\\resources\\vm\\project\\assets\\font\\fontawesome-webfont.ttf"), 
-				new File("E:\\web\\temp\\93e69c27-2383-460b-bf3e-253331b63594\\dm-print\\dm-print-web\\src\\main\\webapp\\assets\\font\\fontawesome-webfont.ttf"));
-	}
 }

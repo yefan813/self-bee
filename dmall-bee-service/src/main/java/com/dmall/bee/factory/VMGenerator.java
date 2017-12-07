@@ -9,6 +9,7 @@ import com.dmall.bee.GenerateAssistant;
 import com.dmall.bee.domain.AppInfo;
 import com.dmall.bee.domain.Table;
 import com.dmall.bee.util.VelocityTools;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * VM模板
@@ -60,6 +61,9 @@ public class VMGenerator extends CodeFactory {
             data.put("table", table);// 当前表
             String fp = null;
             try {
+                if(StringUtils.isEmpty(getTemplate())){
+                    return;
+                }
                 for (String tpl : getTemplate().split(",")) {
                     String fn = tpl.split("-")[1];
                     fp = VelocityTools.getVarName(table.getName());

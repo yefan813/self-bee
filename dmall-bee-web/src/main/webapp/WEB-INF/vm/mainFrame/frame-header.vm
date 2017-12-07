@@ -16,7 +16,7 @@
             <a href="#" class="navbar-brand">
                 <small>
                 	<img src="$!erpModule.getTarget('/assets/img/logo_dmall.png')" width="90" height="23"> 
-                    多点管理系统
+                    管理系统
                 </small>
             </a>
             <!-- /.brand -->

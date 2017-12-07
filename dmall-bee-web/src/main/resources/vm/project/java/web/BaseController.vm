@@ -1,20 +1,15 @@
 package ${constant.getPackageName()}.web;
 
 import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.context.request.WebRequest;
-import com.wm.nb.web.CustomDateEditor;
 import ${constant.getPackageName()}.common.ServletContextUtil;
 import ${constant.getPackageName()}.common.exception.AppException;
-import com.wm.nb.web.WmBaseController;;
-
+import ${constant.getPackageName()}.web.CustomDateEditor;
 
 
 
@@ -23,7 +18,7 @@ import com.wm.nb.web.WmBaseController;;
  * @author ${constant.getProjectAuthor()}
  * @since ${tools.dateFormat("yyyy-MM-dd")}
  */
-public class BaseController extends WmBaseController {
+public class BaseController{
 	
 	@InitBinder
 	public void initBinder(WebDataBinder binder, WebRequest request) {

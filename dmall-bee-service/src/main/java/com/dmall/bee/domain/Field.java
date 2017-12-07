@@ -2,6 +2,9 @@ package com.dmall.bee.domain;
 
 import com.dmall.bee.util.VelocityTools;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * 字段信息
  * 
@@ -109,9 +112,8 @@ public class Field {
 	}
 	
 	public boolean isSkip(){
-//	    List<String> list = Arrays.asList("id,uuid,code,remark,createDate,createUser,modifyDate,modifyUser,isDel,startIndex,endIndex,orderField,orderFieldType".split(","));
-//	    return list.contains(getFieldName());
-	    return false;
+	    List<String> list = Arrays.asList("id,feature,created,modified,yn,startIndex,endIndex,orderField,orderFieldType".split(","));
+	    return list.contains(getFieldName());
 	}
 	
 	public String toString() {

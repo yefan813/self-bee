@@ -12,58 +12,60 @@
 	<packaging>war</packaging>
 	<name>${constant.getProjectArtifactId()}-web</name>
 
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<filtering>true</filtering>
-			</resource>
-		</resources>
-
-		<plugins>
-            <!-- 部署web应用到Tomcat下的插件,并设置Tomcat启动端口与访问路径 -->
+    <build>
+        <filters>
+            <filter>${pfile}</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+        <plugins>
             <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.1</version>
                 <configuration>
                     <port>80</port>
                     <path>/</path>
                     <uriEncoding>UTF-8</uriEncoding>
-                    <server>tomcat7</server>
                 </configuration>
             </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<configuration>
-					<warName>${project.name}</warName>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+        </plugins>
+    </build>
+    <profiles>
+        <!-- 生产环境 -->
+        <profile>
+            <id>online</id>
+            <properties>
+                <pfile>online.properties</pfile>
+            </properties>
+        </profile>
+        <!-- 开发环境 -->
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <properties>
+                <pfile>dev.properties</pfile>
+            </properties>
+        </profile>
+        <!-- 本地开发环境 -->
+        <profile>
+            <id>local</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <pfile>local.properties</pfile>
+            </properties>
+        </profile>
+    </profiles>
 
 	<dependencies>
-		<!-- dmall -->
-		<dependency>
-		    <groupId>com.dmall</groupId>
-		    <artifactId>erp-auth-service</artifactId>
-		</dependency>
-#foreach($depServer in ${constant.depServers})
-		<dependency>
-			<groupId>$depServer.getGroupId()</groupId>
-			<artifactId>$depServer.getArtifactId()</artifactId>
-		</dependency>
-#end
-		<dependency>
-            <groupId>com.wm</groupId>
-            <artifactId>wm-nb-common</artifactId>
-        </dependency>
-        <dependency>
-            <artifactId>admiral-client</artifactId>
-            <groupId>com.dmall.admiral</groupId>
-        </dependency>
-        <!-- service -->
         <dependency>
             <groupId>${constant.getPackageGroupId()}</groupId>
             <artifactId>${constant.getProjectArtifactId()}-service</artifactId>

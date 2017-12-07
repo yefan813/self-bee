@@ -60,7 +60,12 @@ public class DaoGenerator extends CodeFactory {
     public void generator() {
         if (PLAN_DATABASE.equalsIgnoreCase(assist.getDataAccessMode())) {
             super.generator();
-        } else {
+        } else if(PLAN_NBCOMMON.equalsIgnoreCase(assist.getDataAccessMode())) {
+            super.generator();
+            generatorImpl = true;
+            super.generator();
+        }else if(PLAN_FISH.equalsIgnoreCase(assist.getDataAccessMode())){
+            //TODO
             super.generator();
             generatorImpl = true;
             super.generator();

@@ -115,7 +115,8 @@ public class GenerateAssistant extends AppInfo {
      * @return
      */
     public String getProjectPath(){
-        return AppSetting.getConf(PATH_PROJECT)+File.separator+uuid.toString();
+//        return AppSetting.getConf(PATH_PROJECT)+File.separator+uuid.toString();
+        return "/Users/yefan/Desktop/aa";
     }
     
     /**

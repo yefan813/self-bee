@@ -13,14 +13,6 @@
 	<name>${constant.getProjectArtifactId()}-service</name>
 
 	<dependencies>
-        <!-- dmall -->
-#foreach($depServer in ${constant.depServers})
-		<dependency>
-			<groupId>$depServer.getGroupId()</groupId>
-			<artifactId>$depServer.getArtifactId()</artifactId>
-		</dependency>
-#end
-
 		<!-- dao -->
 		<dependency>
 			<groupId>${constant.getPackageGroupId()}</groupId>

@@ -71,10 +71,10 @@ public class BeeController extends BaseController {
 	public RemoteResult del(AppInfo info) {
 			try {
 				MetaDataUtil.getTables(info);
-				return RemoteResult.success();
+				return RemoteResult.success(info.getTables());
 			} catch (Exception e) {
 				BASE_LOG.error("验证失败", e);
-				return RemoteResult.failure("验证失败:"+e.getMessage());
+				return RemoteResult.failure("999","验证失败:"+e.getMessage());
 			}
 	}
 }

@@ -12,27 +12,20 @@
 	<packaging>jar</packaging>
 	<name>${constant.getProjectArtifactId()}-dao</name>
 
-	<build>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-        <filters>
-            <filter>src/main/resources/env/${info.cmd}{env}.properties</filter>
-        </filters>
-	</build>
+##
+##	<build>
+##        <resources>
+##            <resource>
+##                <directory>src/main/resources</directory>
+##                <filtering>true</filtering>
+##            </resource>
+##        </resources>
+##        <filters>
+##            <filter>src/main/resources/env/${info.cmd}{env}.properties</filter>
+##        </filters>
+##	</build>
 
 	<dependencies>
-#if(${info.dataAccessMode} == 'PLANdatabase')
-		<!-- dmall -->
-		<dependency>
-			<groupId>com.dmall</groupId>
-			<artifactId>dmall-data-base</artifactId>
-		</dependency>
-
-#end
 		<!-- pojo -->
 		<dependency>
 			<groupId>${constant.getPackageGroupId()}</groupId>

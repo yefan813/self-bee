@@ -1,25 +1,29 @@
-#parse("project/java/copyright.vm")
 package ${constant.getPackageName()}.dao.base;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ${constant.getPackageName()}.common.exception.AppException;
 
 import java.util.List;
 import java.util.Map;
 
-import javax.annotation.Resource;
-
-import org.apache.log4j.Logger;
-import ${constant.getPackageName()}.common.exception.AppException;
-import org.mybatis.spring.SqlSessionTemplate;
-
 /**
  * 对mybatis的支持<br/>
  * spring配置文件需定义sqlTemplate与batchSqlTemplate
- * @author ${constant.getProjectAuthor()}
- * @since ${tools.dateFormat("yyyy-MM-dd")}
  */
-abstract class MyBatisSupport {
-	protected final Logger LOGGER = Logger.getLogger(getClass());
-	@Resource protected SqlSessionTemplate sqlTemplate;
-	@Resource protected SqlSessionTemplate batchSqlTemplate;
+public abstract class MyBatisSupport {
+	protected static final Logger LOGGER = LoggerFactory.getLogger(MyBatisSupport.class);
+	
+	
+	/**
+	 * SqlSessionTemplate,不同的数据源分开处理
+	 * @param batch 是否批处理
+	 * @param readonly 是否只读
+	 * @return
+	 */
+	protected abstract SqlSessionTemplate getSqlTemplate(boolean batch,boolean readonly);
+	
 	
 	/**
 	 * 新增对象
@@ -31,7 +35,7 @@ abstract class MyBatisSupport {
 		int res = 0;
 		try {
 			if(parameter != null) {
-				res = sqlTemplate.insert(statement, parameter);
+				res = getSqlTemplate(false,false).insert(statement, parameter);
 			}
 		} catch (Exception ex) {
 			throw new AppException("Mybatis执行新增异常", ex);
@@ -48,7 +52,7 @@ abstract class MyBatisSupport {
 	protected int delete(String statement,Object parameter){
 		int res = 0;
 		try {
-			res = sqlTemplate.delete(statement, parameter);
+			res = getSqlTemplate(false,false).delete(statement, parameter);
 		} catch (Exception ex) {
 			throw new AppException("Mybatis执行删除异常", ex);
 		}
@@ -65,13 +69,15 @@ abstract class MyBatisSupport {
 		int res = 0;
 		try {
 			if(parameter != null) {
-				res = sqlTemplate.update(statement, parameter);
+				res = getSqlTemplate(false,false).update(statement, parameter);
 			}
 		} catch (Exception ex) {
 			throw new AppException("Mybatis执行更新异常", ex);
 		}
 		return res;
 	}
+	
+	
 	
 	/**
 	 * 查询一条记录
@@ -85,7 +91,7 @@ abstract class MyBatisSupport {
 	protected <T> T select(String statement,Object parameter) {
 		T obj = null;
 		try {
-			obj = (T)sqlTemplate.selectOne(statement, parameter);
+			obj = (T)getSqlTemplate(false,true).selectOne(statement, parameter);
 		} catch (Exception ex) {
 			throw new AppException("Mybatis执行单条查询异常",ex);
 		}
@@ -103,7 +109,7 @@ abstract class MyBatisSupport {
 	protected <T> List<T> selectList(String statement,Object parameter) {
 		List<T> list = null;
 		try {
-			list = sqlTemplate.selectList(statement, parameter);
+			list = getSqlTemplate(false,true).selectList(statement, parameter);
 		} catch (Exception ex) {
 			throw new AppException("Mybatis执行列表查询异常",ex);
 		}
@@ -122,7 +128,7 @@ abstract class MyBatisSupport {
 	protected <K, V> Map<K, V> selectMap(String statement,Object parameter, String mapKey) {
 		Map<K, V> map = null;
 		try {
-			map = sqlTemplate.selectMap(statement, parameter,mapKey);
+			map = getSqlTemplate(false,true).selectMap(statement, parameter,mapKey);
 		} catch (Exception ex) {
 			throw new AppException("Mybatis执行Map查询异常",ex);
 		}

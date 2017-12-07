@@ -12,9 +12,12 @@
 		<setting name="defaultStatementTimeout" value="25000" />
 	</settings>
 	
-	<!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径
+	<!-- 全局别名设置，在映射文件中只需写别名，而不必写出整个类路径 -->
 	<typeAliases>
-	</typeAliases> -->
+#foreach($table in ${info.tables})
+        <typeAlias type="${constant.getPackageName()}.domain.${table.className}" alias="${tools.getVarName(${table.name})}"/>
+#end
+	</typeAliases>
 
 	<!-- 映射文件路径 -->
 	<mappers>

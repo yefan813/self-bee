@@ -28,8 +28,14 @@ public class VMGenerator extends CodeFactory {
         return "";
     }
 
+//    public String getTemplate() {
+//        return "velocity-list.vm,velocity-edit.vm,velocity-view.vm";
+//    }
+
+
+    @Override
     public String getTemplate() {
-        return "velocity-list.vm,velocity-edit.vm,velocity-view.vm";
+        return "";
     }
 
     public String getModelName() {

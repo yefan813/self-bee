@@ -13,16 +13,14 @@ import ${constant.getPackageName()}.domain.base.BaseDomain;
  */
 public class ${table.className} extends BaseDomain {
 	private static final long serialVersionUID = 1L;
-#foreach(${field} in ${table.fields})
+
+	#foreach(${field} in ${table.fields})
 #if(${field.skip}==false)
 	private ${field.type.simpleName} ${field.fieldName};
-#end	
 #end
+	#end
 
-	public ${table.className}(){
-		//默认无参构造方法
-	}
-#foreach(${field} in ${table.fields})
+	#foreach(${field} in ${table.fields})
 #if(${field.skip}==false)
 
 	/**
@@ -32,7 +30,7 @@ public class ${table.className} extends BaseDomain {
 	public ${field.type.simpleName} ${field.methodPrefix}${field.methodName}(){
 		return ${field.fieldName};
 	}
-	
+
 	/**
 	 * 设置 ${field.remark}
 	 * @param ${field.fieldName}
@@ -41,5 +39,5 @@ public class ${table.className} extends BaseDomain {
 		this.${field.fieldName} = ${field.fieldName};
 	}
 #end
-#end
+	#end
 }

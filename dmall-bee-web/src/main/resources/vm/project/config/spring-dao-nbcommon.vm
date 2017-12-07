@@ -12,6 +12,7 @@
        default-autowire="byName">
 
 	<context:component-scan base-package="${constant.getPackageName()}.dao"/>
+
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
 
 	<bean id="batchSqlTemplate" class="org.mybatis.spring.SqlSessionTemplate">

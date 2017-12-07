@@ -9,13 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.stereotype.Controller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.wm.nb.domain.common.Message;
-import ${constant.getPackageName()}.common.spring.velocity.BaseController;
-import ${constant.getPackageName()}.common.spring.secret.AuthType;
-import ${constant.getPackageName()}.common.spring.secret.Authentication;
-import ${constant.getPackageName()}.domain.Intelligence;
 import ${constant.getPackageName()}.domain.base.Page;
-import ${constant.getPackageName()}.service.IntelligenceService;
+import ${constant.getPackageName()}.service.${table.className}Service;
+import ${constant.getPackageName()}.domain.${table.className};
+import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.HttpServletRequest;
+import ${constant.getPackageName()}.web.BaseController;
 
 /**
  * $!{table.remark} controller层
@@ -24,7 +23,7 @@ import ${constant.getPackageName()}.service.IntelligenceService;
  */
 @Controller
 @RequestMapping(value = "/${tools.getVarName(${table.name})}")
-public class ${table.className}Controller extends BaseController {
+public class ${table.className}Controller extends BaseController{
     private static final Logger LOGGER = LoggerFactory.getLogger(${table.className}Controller.class);
 	@Resource private ${table.className}Service ${tools.getVarName(${table.name})}Service;
 	
@@ -35,12 +34,11 @@ public class ${table.className}Controller extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(method = {RequestMethod.GET,RequestMethod.POST})
-	@Authentication(type=AuthType.NONE)
-	public ModelAndView list(${table.className} ${tools.getVarName(${table.name})},Page<${table.className}> page){
-		Result result = new Result();
-		result.addDefaultModel("${tools.getVarName(${table.name})}",${tools.getVarName(${table.name})});
-		result.addDefaultModel("page",${tools.getVarName(${table.name})}Service.selectPage(${tools.getVarName(${table.name})},page));
-		return toResultSkipLayout("${tools.getVarName(${table.name})}/list",result);
+	@ResponseBody
+	public String list(${table.className} ${tools.getVarName(${table.name})},Page<${table.className}> page){
+		//TODO
+
+		return "";
 	}
 	
 	/**
@@ -49,17 +47,11 @@ public class ${table.className}Controller extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/{${table.primaryField.fieldName}}",method=RequestMethod.PUT)
-	@Authentication(type=AuthType.NONE)
-	public ModelAndView edit(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
-		Result result = new Result();
-		if(${table.primaryField.fieldName} != null && ${table.primaryField.fieldName} > 0) {
-			${table.className} ${tools.getVarName(${table.name})} = ${tools.getVarName(${table.name})}Service.selectEntry(${table.primaryField.fieldName});
-			if(${tools.getVarName(${table.name})} == null) {
-				return toJSON(Message.failure("您要修改的数据不存在或者已被删除!"));
-			}
-			result.addDefaultModel("${tools.getVarName(${table.name})}",${tools.getVarName(${table.name})});
-		}
-		return toResultSkipLayout("${tools.getVarName(${table.name})}/edit",result);
+	@ResponseBody
+	public String edit(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		//TODO
+
+		return "";
 	}
 	
 	/**
@@ -68,11 +60,11 @@ public class ${table.className}Controller extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/{${table.primaryField.fieldName}}",method=RequestMethod.DELETE)
-	@Authentication(type=AuthType.NONE)
-	public ModelAndView del(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
-		int res = ${tools.getVarName(${table.name})}Service.deleteByKey(${table.primaryField.fieldName});
-		Message msg  = res > 0 ? Message.success() : Message.failure();
-		return toJSON(msg);
+	@ResponseBody
+	public String del(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		//TODO
+
+		return "";
 	}
 	
 	/**
@@ -81,15 +73,11 @@ public class ${table.className}Controller extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/{${table.primaryField.fieldName}}",method=RequestMethod.GET)
-	@Authentication(type=AuthType.NONE)
-	public ModelAndView view(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
-		Result result = new Result();
-		${table.className} ${tools.getVarName(${table.name})} = ${tools.getVarName(${table.name})}Service.selectEntry(${table.primaryField.fieldName});
-		if(${tools.getVarName(${table.name})} == null) {
-			return toJSON(Message.failure("您要查看的数据不存在或者已被删除!"));
-		}
-		result.addDefaultModel("${tools.getVarName(${table.name})}",${tools.getVarName(${table.name})});
-		return toResultSkipLayout("${tools.getVarName(${table.name})}/view",result);
+	@ResponseBody
+	public String view(@PathVariable ${table.primaryField.type.simpleName} ${table.primaryField.fieldName}){
+		//TODO
+
+		return "";
 	}
 	
 	/**
@@ -98,11 +86,11 @@ public class ${table.className}Controller extends BaseController {
 	 * @return
 	 */
 	@RequestMapping(value="/save",method=RequestMethod.POST)
-	@Authentication(type=AuthType.NONE)
-	public ModelAndView save(${table.className} ${tools.getVarName(${table.name})}){
-		int res = ${tools.getVarName(${table.name})}Service.saveOrUpdate(${tools.getVarName(${table.name})});
-		Message msg  = res > 0 ? Message.success() : Message.failure();
-		return toJSON(msg);
+	@ResponseBody
+	public String save(${table.className} ${tools.getVarName(${table.name})}){
+		//TODO
+
+		return "";
 	}
 	
 }

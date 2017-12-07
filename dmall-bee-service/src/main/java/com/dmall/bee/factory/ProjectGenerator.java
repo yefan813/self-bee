@@ -49,6 +49,7 @@ public class ProjectGenerator extends CodeFactory {
                 // 父/子模块根路径
                 String ph = info.getArtifactId()
                         + ("".equals(model) ? "" : "/" + info.getArtifactId() + "-" + srcToDesModel(model));
+//                file = new File(getPath() + "/" + ph);
                 file = new File(getPath() + "/" + ph);
                 if (!file.exists() || !file.isDirectory()) {
                     file.mkdirs();
@@ -81,7 +82,7 @@ public class ProjectGenerator extends CodeFactory {
         String path = file.getAbsolutePath() + "/src/main/resources/";
         if ("dao".equals(model)) {
 
-            list.put("dao-env.vm", path + File.separator+ "env" + File.separator + "dev.properties");
+//            list.put("dao-env.vm", path + File.separator+ "env" + File.separator + "dev.properties");
 
             if (PLAN_DATABASE.equals(info.getDataAccessMode())) {
                 list.put("spring-dao-database.vm", path + "spring-dao.xml");
@@ -89,19 +90,30 @@ public class ProjectGenerator extends CodeFactory {
             } else if (PLAN_NBCOMMON.equals(info.getDataAccessMode())) {
                 list.put("spring-dao-nbcommon.vm", path + "spring-dao.xml");
                 list.put("spring-sqlmap-config.vm", path + "sqlmap-config.xml");
+            }else if(PLAN_FISH.equals(info.getDataAccessMode())){
+                list.put("spring-sqlmap-config.vm", path + "sqlmap-config.xml");
             }
         } else if ("service".equals(model)) {
-            list.put("spring-service.vm", path + "spring-service.xml");
+//            list.put("spring-service.vm", path + "spring-service.xml");
         } else if ("web".equals(model)) {
             list.put("web.vm", file.getAbsolutePath() + "/src/main/webapp/WEB-INF/web.xml");
             list.put("gitignore.vm", assist.getProjectPath()+"/"+info.getArtifactId()+ "/.gitignore");
-            list.put("spring-all.vm", path + "spring-all.xml");
-            list.put("spring-mvc.vm", path + "spring-mvc.xml");
-            list.put("spring-dsf-all.vm", path + "spring-dsf-all.xml");
-            list.put("spring-dsf-erp-client.vm", path + "spring-dsf-erp-client.xml");
-            list.put("spring-dmg.vm", path + "spring-dmg.xml");
+            if(PLAN_FISH.equals(info.getDataAccessMode())){
+                list.put("/fish/spring-config.vm", path + "spring-config.xml");
+                list.put("/fish/spring-config-servlet.vm", path + "spring-config-servlet.xml");
+                list.put("/fish/spring-config-service.vm", path + "spring/spring-config-service.xml");
+                list.put("/fish/spring-config-dao.vm", path + "spring/spring-config-dao.xml");
+                list.put("/fish/important.properties", path + "important.properties");
+
+            }else{
+                list.put("spring-all.vm", path + "spring-all.xml");
+                list.put("spring-mvc.vm", path + "spring-mvc.xml");
+                list.put("spring-config-dao.vm", path + "spring-config-dao.xml");
+            }
             list.put("logback.vm", path + "logback.xml");
-            list.put("web-env.vm", path + File.separator+ "env" + File.separator +  "dev.properties");
+            list.put("/fish/dev.properties", file.getAbsolutePath() + File.separator +  "dev.properties");
+            list.put("/fish/local.properties", file.getAbsolutePath() + File.separator +  "local.properties");
+            list.put("/fish/online.properties", file.getAbsolutePath() + File.separator +  "online.properties");
         } else if ("rpc".equals(model)) {
             list.put("spring-rpc.vm", path + "spring-rpc.xml");
         } else if ("worker".equals(model)) {

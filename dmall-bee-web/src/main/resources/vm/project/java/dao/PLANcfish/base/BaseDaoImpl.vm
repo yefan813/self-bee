@@ -1,24 +1,45 @@
-#parse("project/java/copyright.vm")
 package ${constant.getPackageName()}.dao.base;
 
+import org.mybatis.spring.SqlSessionTemplate;
+import ${constant.getPackageName()}.common.exception.AppException;
+
+import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
-import ${constant.getPackageName()}.common.exception.AppException;
+
+
 
 /**
  * dao实现类
- * @author ${constant.getProjectAuthor()}
- * @since ${tools.dateFormat("yyyy-MM-dd")}
+ * @param <T> 实体
+ * @param <KEY> 主键
  */
 public abstract class BaseDaoImpl<T, KEY extends Serializable> extends MyBatisSupport implements BaseDao<T, KEY> {
-	private static final String DEFAULT_INSERT_KEY = "insertEntry";
-	private static final String DEFAULT_INSERT_LAST_SEQUENCE_KEY = "lastSequence";
-	private static final String DEFAULT_DELETE_ARRAY_KEY = "deleteByArrayKey";
-	private static final String DEFAULT_DELETE_CONDTION = "deleteByCondtion";
-	private static final String DEFAULT_UPDATE_KEY = "updateByKey";
-	private static final String DEFAULT_SELECT_ARRAY_KEY = "selectEntryArray";
-	private static final String DEFAULT_SELECT_CONDTION = "selectEntryList";
-	private static final String DEFAULT_SELECT_CONDTION_COUNT = "selectEntryListCount";
+	protected static final String DEFAULT_INSERT_KEY = "insertEntry";
+	protected static final String DEFAULT_INSERT_LAST_SEQUENCE_KEY = "lastSequence";
+	protected static final String DEFAULT_DELETE_ARRAY_KEY = "deleteByArrayKey";
+	protected static final String DEFAULT_DELETE_CONDTION = "deleteByCondtion";
+	protected static final String DEFAULT_UPDATE_KEY = "updateByKey";
+	protected static final String DEFAULT_SELECT_ARRAY_KEY = "selectEntryArray";
+	protected static final String DEFAULT_SELECT_CONDTION = "selectEntryList";
+	protected static final String DEFAULT_SELECT_CONDTION_COUNT = "selectEntryListCount";
+	
+	@Resource private SqlSessionTemplate sqlTemplate;
+	@Resource private SqlSessionTemplate batchSqlTemplate;
+	
+	
+	@Override
+	protected  SqlSessionTemplate getSqlTemplate(boolean batch,boolean readonly){
+		if(readonly) {
+		}
+
+		if(batch) {
+			return batchSqlTemplate;
+		}
+		return sqlTemplate;
+	}
+	
+
 
 	/**
 	 * 获取命名空前前缀
@@ -42,7 +63,7 @@ public abstract class BaseDaoImpl<T, KEY extends Serializable> extends MyBatisSu
 		@SuppressWarnings("unchecked")
 		int result = this.insertEntry(t);
 		if (result > 0) {
-			Integer id = (Integer)sqlTemplate.selectOne(getNameSpace(DEFAULT_INSERT_LAST_SEQUENCE_KEY));
+			Integer id = (Integer)select(getNameSpace(DEFAULT_INSERT_LAST_SEQUENCE_KEY),null);
 			if (id != null && id >0) {
 				try {
 					Class<?> clz = t.getClass();
@@ -54,8 +75,6 @@ public abstract class BaseDaoImpl<T, KEY extends Serializable> extends MyBatisSu
 		}
 		return result;
 	}
-	
-	
 	
 	public int deleteByKey(KEY...key) {
 		return this.delete(getNameSpace(DEFAULT_DELETE_ARRAY_KEY), key);

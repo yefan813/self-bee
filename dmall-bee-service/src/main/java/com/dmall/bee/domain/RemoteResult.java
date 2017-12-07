@@ -2,7 +2,7 @@ package com.dmall.bee.domain;
 
 public class RemoteResult {
 	
-	public static final String SUCCESS_CODE = "1000";
+	public static final String SUCCESS_CODE = "0000";
 	
 	private String code;
 	private String msg;

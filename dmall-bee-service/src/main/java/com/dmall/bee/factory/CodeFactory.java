@@ -25,6 +25,9 @@ import com.dmall.bee.util.VelocityUtil;
 public abstract class CodeFactory {
     public final static String PLAN_NBCOMMON = "PLANnbcommon";
     public final static String PLAN_DATABASE = "PLANdatabase";
+    public final static String PLAN_FISH = "PLANcfish";
+    public final static String PLAN_EMPTY = "PLANempty";
+
 
     protected final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -113,7 +116,7 @@ public abstract class CodeFactory {
         list.add(new ServiceGenerator(info,assist));
         list.add(new DomainGenerator(info,assist));
         list.add(new ControllerGenerator(info,assist));
-        //list.add(new VMGenerator(info,assist));
+        list.add(new VMGenerator(info,assist));
         return list;
     }
     

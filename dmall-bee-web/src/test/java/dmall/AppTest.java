@@ -3,6 +3,7 @@ package dmall;
 import com.dmall.bee.AppEngineNew;
 import com.dmall.bee.domain.AppInfo;
 import com.dmall.bee.domain.DmallService;
+import com.dmall.bee.factory.CodeFactory;
 import com.google.common.collect.Lists;
 
 /**
@@ -12,13 +13,12 @@ public class AppTest {
 
     public static void main(String[] args) throws Exception {
         AppInfo appInfo = new AppInfo();
-        appInfo.setUrl("jdbc:MySql://192.168.8.235:3306/dmall_wms_print?characterEncoding=UTF-8");
-        appInfo.setUser("dev");
-        appInfo.setPwd("111111");
-        appInfo.setArtifactId("dmall-print");
-        appInfo.setDataAccessMode("PLANdatabase");
-        appInfo.setDepServers(Lists.newArrayList(DmallService.ERP,DmallService.OOP,DmallService.DMC,DmallService.DSF,DmallService.DMG));
-        
+        appInfo.setUrl("jdbc:MySql://127.0.0.1:3306/fish?characterEncoding=UTF-8");
+        appInfo.setUser("root");
+        appInfo.setPwd("root");
+        appInfo.setArtifactId("start");
+        appInfo.setDataAccessMode(CodeFactory.PLAN_FISH);
+
         //FileOutputStream out = new FileOutputStream(new File("1.zip"));
         AppEngineNew.doGenerator(appInfo);
     }

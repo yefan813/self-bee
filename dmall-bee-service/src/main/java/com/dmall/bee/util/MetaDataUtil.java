@@ -5,10 +5,7 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Types;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -24,8 +21,6 @@ import com.dmall.bee.domain.Table;
  */
 public class MetaDataUtil {
 	private static final Logger LOGGER = LoggerFactory.getLogger(MetaDataUtil.class);
-
-
 	/**
 	 * 数据库类型映射
 	 * 

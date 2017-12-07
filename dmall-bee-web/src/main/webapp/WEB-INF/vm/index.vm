@@ -6,7 +6,7 @@
    <div class="page-header-inner container" style="margin-top:5px;">
        <!-- BEGIN LOGO -->
        <div class="page-logo" >
-          <img src="../assets/global/img/dmall-bee-logo.PNG" style="margin-top:5px;" width="250" heigth="150" title="Designed by 李苏芸"/>
+          <img src="" style="margin-top:5px;" width="250" heigth="150" title=""/>
        </div>
        <!-- END LOGO -->
        <div style="color:#9b9c96;margin-top:36px;margin-left:380px;font-family:黑体;font-style:italic">
@@ -14,7 +14,7 @@
        </div>
    </div>
    <div class="pull-right">
-   		<a href="http://gitlab.dmall.com/worker-bees/dmall-bee" target="_blank">
+   		<a href="" target="_blank">
    			<img style="position: absolute; top: 0; right: 0; border: 0;" src="/assets/apps/img/fork_me.png"  width="100" height="100" alt="Fork me on GitLab">
    		</a>
    </div>
@@ -97,7 +97,7 @@
                                                        <span class="required"> * </span>
                                                    </label>
                                                    <div class="col-md-4">
-                                                       <input type="text" class="form-control" name="url"  value="jdbc:MySql://192.168.8.235:3306/dmall_bee?characterEncoding=UTF-8"/>
+                                                       <input type="text" class="form-control" name="url"  value="jdbc:MySql://127.0.0.1:3306/fish?characterEncoding=UTF-8"/>
                                                        <span class="help-block"> 填写数据库url </span>
                                                    </div>
                                                </div>
@@ -106,7 +106,7 @@
                                                        <span class="required"> * </span>
                                                    </label>
                                                    <div class="col-md-4">
-                                                       <input type="text" class="form-control" name="user" id="" value="dev"/>
+                                                       <input type="text" class="form-control" name="user" id="" value="root"/>
                                                        <span class="help-block"> 填写数据库用户 </span>
                                                    </div>
                                                </div>
@@ -115,7 +115,7 @@
                                                        <span class="required"> * </span>
                                                    </label>
                                                    <div class="col-md-4">
-                                                       <input type="text" class="form-control" name="pwd" id="submit_form_password" value="111111"/>
+                                                       <input type="text" class="form-control" name="pwd" id="submit_form_password" value="root"/>
                                                        <span class="help-block"> 填写数据库密码</span>
                                                    </div>
                                                    
@@ -161,13 +161,13 @@
                                                     </label>
                                                     <div class="col-md-4">
                                                         <div class="radio-list">
-                                                            <label>
+                                                           <!-- <label>
                                                                 <div class="">
                                                                 	<span class="">
                                                                 		<input type="radio" name="dataAccessMode" value="PLANdatabase" data-title="data-base" checked>
                                                                 	</span>
                                                                 	data-base
-                                                                </div>  
+                                                                </div>
                                                             </label>
                                                             <label>
                                                                 <div class="">
@@ -175,7 +175,15 @@
                                                                 		<input type="radio" name="dataAccessMode" value="PLANnbcommon" data-title="nbcommon">
                                                                 	</span>
                                                                 	nb-common
-                                                                </div> 
+                                                                </div>
+                                                            </label> -->
+                                                            <label>
+                                                                <div class="">
+                                                                	<span class="">
+                                                                		<input type="radio" name="dataAccessMode" value="PLANcfish" data-title="base">
+                                                                	</span>
+                                                                    base_dao
+                                                                </div>
                                                             </label>
                                                              <label>
                                                                 <div class="">
@@ -574,7 +582,7 @@
 	            				}
 	            				$("#table_div").show();
 	            			}else{
-	            				bootbox.alert(res.result);
+	            				bootbox.alert(res.msg);
 	            			}
 	            		},error:function(){
 	            			App.unblockUI();

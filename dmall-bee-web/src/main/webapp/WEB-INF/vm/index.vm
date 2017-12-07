@@ -312,11 +312,13 @@
                      <h4 class="modal-title">提示</h4>
                  </div>
                  <div class="modal-body">
-                 		<p style="color:#FF0000">请根据需要修改必要的项目参数：</p>	
-                     	<p>1. 填写dsf 的 APP NAME 和 OWNER NAME</p>
-                     	<p>2. 填写dmc 的 APPCODE </p>
-                     	<p>3. 设置dmg 的 TOPIC </p>
-                     	<p>4. 执行 mvn tomcat:run , 访问 localhost </p>
+##                 		<p style="color:#FF0000">请根据需要修改必要的项目参数：</p>
+##                     	<p>1. 填写dsf 的 APP NAME 和 OWNER NAME</p>
+##                     	<p>2. 填写dmc 的 APPCODE </p>
+##                     	<p>3. 设置dmg 的 TOPIC </p>
+##                     	<p>4. 执行 mvn tomcat:run , 访问 localhost </p>
+                        <p>1. 执行 mvn tomcat:run , 访问 localhost </p>
+
                  </div>
                  <div class="modal-footer">
                      <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="close-btn">确定并下载代码</button>

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8" />
-	<title>#if($title)$title - 多点管理系统 #else 多点管理系统 #end</title>
+	<title>#if($title)$title - 管理系统 #else 管理系统 #end</title>
 	<meta name="description" content="Static & Dynamic Tables" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!-- basic styles -->

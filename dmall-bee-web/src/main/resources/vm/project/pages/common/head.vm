@@ -1,6 +1,6 @@
 <head>
 	<meta charset="utf-8" />
-	<title>${info.cmd2}if(${info.cmd}title)${info.cmd}title - 多点管理系统 ${info.cmd2}else 多点管理系统 ${info.cmd2}end</title>
+	<title>${info.cmd2}if(${info.cmd}title)${info.cmd}title - 管理系统 ${info.cmd2}else 管理系统 ${info.cmd2}end</title>
 	<meta name="description" content="Static & Dynamic Tables" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!-- basic styles -->
